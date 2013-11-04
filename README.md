@@ -1,9 +1,9 @@
 ABC-player
 ==========
 
-###SUTD ISTD 50.001 INTRODUCTION TO INFORMATION SYSTEMS & PROGRAMMING
+##SUTD ISTD 50.001 INTRODUCTION TO INFORMATION SYSTEMS & PROGRAMMING
 
-##ABC Music player
+###ABC Music player
 
 This is the source-code for a music player that plays the .abc format.
 
