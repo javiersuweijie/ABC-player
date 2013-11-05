@@ -1,7 +1,6 @@
 package Parser;
 
 public class Parser {
-
 	String[] splitted;
 	int current_position;
 	

@@ -36,3 +36,8 @@
 ehthumbs.db
 Thumbs.db
 /bin
+
+# IDE specific#
+###############
+.idea/
+*.iml
