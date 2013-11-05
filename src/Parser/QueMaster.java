@@ -1,4 +1,6 @@
 package Parser;
+import java.util.ArrayList;
+
 import sound.*;
 /** QueMaster handles all rhythm and note related 
  * tokens to create an array of NoteEvents
@@ -13,6 +15,9 @@ public class QueMaster {
 	private int duplet;
 	private int triplet;
 	private int quadruplet;
+	private ArrayList<Integer> voice_channels;
+	private int current_channel;
+	
 	//private ArrayList<NoteEvent>;
 /** The QueMaster is constructed with default tempo, meter and length
  * default tempo = 60, meter = 4/4, length = 1/8
@@ -22,6 +27,8 @@ public class QueMaster {
 		this.tempo = 60;
 		this.meter = 1;
 		this.length = 1/8;
+		this.voice_channels = new ArrayList<Integer>(1);
+		this.current_channel = 0;
 	}
 
 	public int getTempo() {
@@ -34,6 +41,14 @@ public class QueMaster {
 	
 	public float getLength() {
 		return this.length;
+	}
+	
+	public int getCurrentVoice() {
+		return this.current_channel;
+	}
+	
+	public ArrayList<Integer> getVoiceChannels() {
+		return this.voice_channels;
 	}
 	/** Reads a token to change the state of the QueMaster
 	 * 
@@ -57,6 +72,12 @@ public class QueMaster {
 					}
 					else this.length = Float.valueOf(t.value);
 					 break;
+		case VOICE: int v = Integer.valueOf(t.value);
+					while (v>voice_channels.size()) {
+						voice_channels.add(0);
+					}
+					current_channel = v-1;
+					break;
 		default: break;
 		}
 	}
@@ -64,6 +85,10 @@ public class QueMaster {
 	public void read(Note n) {
 		
 	}
-	
+/*	
+	public NoteEvent queCreator(Note n, int v) {
+		return new NoteEve
+	}
+*/
 	
 }
