@@ -3,7 +3,7 @@ package Parser;
 import java.util.HashMap;
 import java.util.Map;
 
-public class keys {
+public class Keys {
 	public static Map<String, String> getKey (String K){
 		Map<String, String> keyset = new HashMap<String, String>();
 		keyset.put("C",	"C");
