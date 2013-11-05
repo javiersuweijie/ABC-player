@@ -1,7 +1,5 @@
 package Parser;
 
-import java.util.Iterator;
-
 public class Parser {
 
 	String[] splitted;
@@ -17,6 +15,7 @@ public class Parser {
 	}
 	
 	public Token next() {
+		if (current_position>=splitted.length) return null;
 		String[] a = getSplit()[current_position].split(" ");
 		TokenType token = TokenType.valueOf(a[0]);
 		String value = a[1];
