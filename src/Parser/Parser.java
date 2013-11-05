@@ -1,9 +1,6 @@
 package Parser;
 
-import java.util.Iterator;
-
 public class Parser {
-
 	String[] splitted;
 	int current_position;
 	
