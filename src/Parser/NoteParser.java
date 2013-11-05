@@ -11,6 +11,14 @@ import java.util.regex.Pattern;
 public class NoteParser {
   String current_key;
 
+  public NoteParser() {
+    this.current_key = "C";
+  }
+
+  public void setKey(String Key) {
+    this.current_key = Key;
+  }
+
   public Note parse(Token note){
     Pattern accidentals = Pattern.compile("[=_^]");
     Pattern letter = Pattern.compile("[\\w]");
@@ -37,5 +45,13 @@ public class NoteParser {
       }
     }
     return octave;
+  }
+
+  public char findBaseNote(Token note) {
+    Pattern letter = Pattern.compile("[a-gA-G]");
+    Matcher matcher = letter.matcher(note.value);
+    char baseNote = 'C';
+    if (matcher.find()) baseNote = matcher.group().toUpperCase().charAt(0);
+    return baseNote;
   }
 }

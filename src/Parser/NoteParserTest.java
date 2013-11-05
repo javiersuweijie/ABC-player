@@ -34,7 +34,14 @@ public class NoteParserTest {
     assertEquals("It reduces the octave by -3",-3, np.findOctave(note));
   }
 
-  public void testFindKey(){
+  @Test
+  public void testGetBaseNote(){
+    NoteParser np = new NoteParser();
 
+    Token note = new Token(TokenType.NOTE, "C");
+    assertEquals("The note does not change",'C', np.findBaseNote(note));
+
+    note = new Token(TokenType.NOTE, "g");
+    assertEquals("The Note is capitalized",'G', np.findBaseNote(note));
   }
 }
