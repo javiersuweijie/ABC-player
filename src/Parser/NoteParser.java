@@ -20,15 +20,15 @@ public class NoteParser {
   }
 
   public Note parse(Token note){
-    Pattern accidentals = Pattern.compile("[=_^]");
-    Pattern letter = Pattern.compile("[\\w]");
     Pattern length = Pattern.compile("/?[\\d]*");
 
     int octave = findOctave(note);
+    char baseNote = findBaseNote(note);
+    int accidentals = findAccidentals(note, baseNote);
     return new Note('C',1);
   }
 
-  public int findOctave(Token note){
+  int findOctave(Token note){
     Pattern octave_modifier = Pattern.compile("([(A-G)(a-g)])([,']*)");
     Matcher matcher = octave_modifier.matcher(note.value);
 
@@ -47,11 +47,33 @@ public class NoteParser {
     return octave;
   }
 
-  public char findBaseNote(Token note) {
+  char findBaseNote(Token note) {
     Pattern letter = Pattern.compile("[a-gA-G]");
     Matcher matcher = letter.matcher(note.value);
     char baseNote = 'C';
     if (matcher.find()) baseNote = matcher.group().toUpperCase().charAt(0);
     return baseNote;
+  }
+
+  int findAccidentals(Token note, char baseNote) {
+    String shiftedNote = Keys.getKey(current_key).get(""+baseNote);
+    return findAccidentals(note.value+shiftedNote);
+  }
+
+  int findAccidentals(String note){
+    Pattern accidentalsPattern = Pattern.compile("[=_^]");
+    Matcher matcher = accidentalsPattern.matcher(note);
+    int accidentals = 0;
+    while(matcher.find()){
+      char accidental = matcher.group().charAt(0);
+
+      if(accidental == '=') {
+        accidentals = 0;
+        break;
+      }
+      if(accidental == '_') accidentals -=1;
+      else accidentals +=1;
+    }
+    return accidentals;
   }
 }

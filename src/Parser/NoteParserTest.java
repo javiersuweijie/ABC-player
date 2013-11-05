@@ -42,6 +42,30 @@ public class NoteParserTest {
     assertEquals("The note does not change",'C', np.findBaseNote(note));
 
     note = new Token(TokenType.NOTE, "g");
-    assertEquals("The Note is capitalized",'G', np.findBaseNote(note));
+    assertEquals("The Note is capitalized", 'G', np.findBaseNote(note));
+  }
+
+  @Test
+  public void testGetAccidentals(){
+    NoteParser np = new NoteParser();
+
+    Token note = new Token(TokenType.NOTE, "_C");
+    assertEquals("It reduces the accidental by 1", -1, np.findAccidentals(note, 'C'));
+
+    note = new Token(TokenType.NOTE, "^C");
+    assertEquals("It increases the accidental by 1", 1, np.findAccidentals(note, 'C'));
+
+    note = new Token(TokenType.NOTE, "^^C");
+    assertEquals("It increases the accidental by 1", 2, np.findAccidentals(note, 'C'));
+
+    np.setKey("D");
+    note = new Token(TokenType.NOTE, "c");
+    assertEquals("It increases the accidental by 1", 1, np.findAccidentals(note, 'C'));
+    note = new Token(TokenType.NOTE, "=c");
+    assertEquals("It does not change the accidental", 0, np.findAccidentals(note, 'C'));
+    note = new Token(TokenType.NOTE, "^c");
+    assertEquals("It does not change the accidental", 2, np.findAccidentals(note, 'C'));
+    note = new Token(TokenType.NOTE, "_c");
+    assertEquals("It does not change the accidental", 0, np.findAccidentals(note, 'C'));
   }
 }
