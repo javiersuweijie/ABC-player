@@ -22,9 +22,19 @@ public class NoteParserTest {
     assertEquals("It reduces the octave by 1", -1, np.findOctave(note));
 
     note = new Token(TokenType.NOTE, "c'");
-    assertEquals("It does not change the octave",2, np.findOctave(note));
+    assertEquals("It increases the octave by 2",2, np.findOctave(note));
 
     note = new Token(TokenType.NOTE, "c");
     assertEquals("It does not change the octave",1, np.findOctave(note));
+
+    note = new Token(TokenType.NOTE, "c'''");
+    assertEquals("It increases the octave by 4",4, np.findOctave(note));
+
+    note = new Token(TokenType.NOTE, "C,,,");
+    assertEquals("It reduces the octave by -3",-3, np.findOctave(note));
+  }
+
+  public void testFindKey(){
+
   }
 }

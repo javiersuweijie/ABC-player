@@ -21,17 +21,20 @@ public class NoteParser {
   }
 
   public int findOctave(Token note){
-    Pattern octave_modifier = Pattern.compile("([\\w])([,']?)");
+    Pattern octave_modifier = Pattern.compile("([(A-G)(a-g)])([,']*)");
     Matcher matcher = octave_modifier.matcher(note.value);
 
     int octave = 0;
     if (matcher.find()){
-      char letter = matcher.group(1).charAt(0);   //The letter in the note
-      char modifier = matcher.group(2).isEmpty()?'x':matcher.group(2).charAt(0); //The Symbol that follows the letter
-      System.out.println(modifier);
-      if (letter > 'Z') octave++;
-      if (modifier == '\'') octave++;
-      else if (modifier == ',') octave--;
+      String modifiers = matcher.group(2);
+      char letter = matcher.group(1).charAt(0);
+
+      if (letter >= 'a') octave++;
+      if (!modifiers.isEmpty()) {
+        int length = modifiers.length();
+        length *= modifiers.charAt(0) ==','? -1:1;
+        octave += length;
+      }
     }
     return octave;
   }
