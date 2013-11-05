@@ -1,36 +1,31 @@
 package Lexer;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import Lexer.Token.TokenType;
+
 public class LexerFile {
-	public static enum TokenType{
-		COMPOSER,
-		KEY,
-		LENGTH,
-		METER,
-		TEMPO,
-		TITLE,
-		INDEX,
-		VOICE,
-		INT,
-		STRING,
-		BAR,
-		NOTE,
-		COMMENT,
-		CHORT_ST,
-		CHORT_END,
-		TRIPLET,
-		DUPLET,
-		QUADRUPLET
+	private String str;
+	private int index=0;
+	
+	private final Matcher matcher;
+	//private static final String NOTE;
+	
+	private static final Pattern REGEX=Pattern.compile("C\\s*:[^\n]+\n", Pattern.DOTALL);
+	
+	private static final TokenType[] TOKEN_TYPE={
+		TokenType.COMPOSER
+	};
+	
+	public LexerFile(String string){
+		this.str=string;
+		this.matcher=REGEX.matcher(str);
 	}
 	
-	private String tokenName;
-	private TokenType tokenType;
-	
-	
-	public String getTokenName(){
-		return tokenName;
-	}
-	
-	public TokenType getTokenType(){
-		return tokenType;
+	public Token next() throws IllegalArgumentException{
+		
+		
+		throw new RuntimeException("Regex error - should not reach here.");
 	}
 }
