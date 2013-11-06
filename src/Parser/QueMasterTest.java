@@ -46,19 +46,21 @@ public class QueMasterTest {
 	public void testNoteEventCreator() {
 		QueMaster qm = new QueMaster();
 		assertEquals("It should have 1 channel", 1,qm.getVoiceChannels().size());
-		NoteEvent n = qm.noteEventCreator(note_fixture1);
+		qm.read(note_fixture1);
+		NoteEvent n = qm.getNoteEvents().get(0);
 		assertEquals("It should have the right pitch", 69, n.pitch);
 		assertEquals("It should have the right start tick", 0,n.start_tick);
 		assertEquals("It should have the right tick length",2,n.tick_length);
 		
-		NoteEvent n2 = qm.noteEventCreator(note_fixture2);
+		qm.read(note_fixture2);
+		NoteEvent n2 = qm.getNoteEvents().get(1);
 		assertEquals("It should have the right pitch", 71, n2.pitch);
 		assertEquals("It should have the right start tick", 2,n2.start_tick);
 		assertEquals("It should have the right tick length", 8,n2.tick_length);
 		
 		qm.read(rest);
-		
-		NoteEvent n3 = qm.noteEventCreator(note_fixture2);
+		qm.read(note_fixture2);
+		NoteEvent n3 = qm.getNoteEvents().get(2);
 		assertEquals("It should have the right pitch", 71, n3.pitch);
 		assertEquals("It should have the right start tick", 22,n3.start_tick);
 		assertEquals("It should have the right tick length", 8,n3.tick_length);
@@ -68,9 +70,11 @@ public class QueMasterTest {
 	public void testChordCreation() {
 		QueMaster qm = new QueMaster();
 		qm.read(chord);
-		NoteEvent n1 = qm.noteEventCreator(note_fixture3);
-		NoteEvent n2 = qm.noteEventCreator(note_fixture4);
+		qm.read(note_fixture3);
+		qm.read(note_fixture4);
 		qm.read(chord);
+		NoteEvent n1 = qm.getNoteEvents().get(0);
+		NoteEvent n2 = qm.getNoteEvents().get(1);
 		assertEquals("It should have the right pitch", 60, n1.pitch);
 		assertEquals("It should have the right start tick(note1)", 0,n1.start_tick);
 		assertEquals("It should have the right tick length", 4,n1.tick_length);
@@ -88,13 +92,10 @@ public class QueMasterTest {
 		qm.read(note_fixture1);
 		qm.read(note_fixture1);
 		qm.read(note_fixture1);
-		
 		qm.read(repeat_end);
 		assertEquals("It should have 8 note events",8,qm.getNoteEvents().size());
 		NoteEvent n5 = qm.noteEventCreator(note_fixture1);
 		assertEquals("It should have the right start tick(note2)",16,n5.start_tick);
-
-		
 	}
 	
 
