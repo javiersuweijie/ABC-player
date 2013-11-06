@@ -15,7 +15,11 @@ public class QueMaster {
 	private int duplet;
 	private int triplet;
 	private int quadruplet;
+	private boolean chord;
+	private boolean bar_repeat;
 	private ArrayList<Integer> voice_channels;
+	private ArrayList<Note> note_storage;
+	private ArrayList<NoteEvent> noteEventList;
 	private int current_channel;
 	
 	//private ArrayList<NoteEvent>;
@@ -26,9 +30,14 @@ public class QueMaster {
 	public QueMaster() {
 		this.tempo = 60;
 		this.meter = 1;
-		this.length = 1/8;
-		this.voice_channels = new ArrayList<Integer>(1);
+		this.length = (float)1/8;
+		this.voice_channels = new ArrayList<Integer>();
+		this.note_storage = new ArrayList<Note>();
+		this.noteEventList = new ArrayList<NoteEvent>();
+		this.voice_channels.add(0);
 		this.current_channel = 0;
+		this.chord = false;
+		this.bar_repeat = false;
 	}
 
 	public int getTempo() {
@@ -47,6 +56,11 @@ public class QueMaster {
 		return this.current_channel;
 	}
 	
+
+	public ArrayList<NoteEvent> getNoteEvents() {
+		return this.noteEventList;
+	}
+	
 	public ArrayList<Integer> getVoiceChannels() {
 		return this.voice_channels;
 	}
@@ -58,37 +72,70 @@ public class QueMaster {
 	 */
 	public void read(Token t) {
 		switch (t.type) {
-		case TEMPO: this.tempo = Integer.valueOf(t.value);
-					break;
-		case METER: if (t.value.length()>2) {
-						String[] s = t.value.split("/");
-						this.meter = Float.valueOf(s[0])/Float.valueOf(s[1]);
-					}
-					else this.meter = Float.valueOf(t.value);
-					break;
-		case LENGTH: if (t.value.length()>2) {
-						String[] s = t.value.split("/");
-						this.length = Float.valueOf(s[0])/Float.valueOf(s[1]);
-					}
-					else this.length = Float.valueOf(t.value);
-					 break;
-		case VOICE: int v = Integer.valueOf(t.value);
-					while (v>voice_channels.size()) {
-						voice_channels.add(0);
-					}
-					current_channel = v-1;
-					break;
-		default: break;
+			case TEMPO: this.tempo = Integer.valueOf(t.value);
+						break;
+			case METER: if (t.value.length()>2) {
+							String[] s = t.value.split("/");
+							this.meter = Float.valueOf(s[0])/Float.valueOf(s[1]);
+						}
+						else this.meter = Float.valueOf(t.value);
+						break;
+						
+			case LENGTH: if (t.value.length()>2) {
+							String[] s = t.value.split("/");
+							this.length = Float.valueOf(s[0])/Float.valueOf(s[1]);
+						}
+						else this.length = Float.valueOf(t.value);
+						 break;
+						 
+			case VOICE: int v = Integer.valueOf(t.value);
+						while (v>voice_channels.size()) {
+							voice_channels.add(0);
+						}
+						current_channel = v-1;
+						break;
+						
+			case REST: int rest = (int)(Integer.valueOf(t.value)*32*this.length);
+					   int start = voice_channels.get(current_channel);
+					   voice_channels.set(current_channel, start+rest);
+					   break;
+					   
+			case CHORD: this.chord = !this.chord;
+						break;
+						
+			case BAR: if (t.value == ":|") {
+							for (Note note:this.note_storage) {
+								NoteEvent ne = this.noteEventCreator(note);
+								this.noteEventList.add(ne);
+							}
+							this.note_storage.clear();
+						}
+					  else if (t.value == "|:") {
+						  this.note_storage.clear();
+					  }
+					  break;
+
+			default: break;
 		}
 	}
 	
 	public void read(Note n) {
+		this.note_storage.add(n);
+		NoteEvent ne = this.noteEventCreator(n);
+		this.noteEventList.add(ne);
+		
 		
 	}
-/*	
-	public NoteEvent queCreator(Note n, int v) {
-		return new NoteEve
+	
+	public NoteEvent noteEventCreator(Note n) {
+		int start_tick = voice_channels.get(current_channel);
+		int tick_length = (int) (32*n.length*this.length);
+		NoteEvent ne = new NoteEvent(n.toMidiNote(),start_tick,tick_length);
+		if (!chord) {
+			voice_channels.set(current_channel, ( start_tick + tick_length));
+		}
+		return ne;
 	}
-*/
+
 	
 }

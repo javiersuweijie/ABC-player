@@ -4,12 +4,13 @@ public class NoteEvent {
 	
 	public int pitch;
 	public int start_tick;
-	public int end_tick;
+	public int tick_length;
 	
-	NoteEvent(int pitch, int start_tick, int end_tick) {
+	public NoteEvent(int pitch, int start_tick, int tick_length) {
 		this.pitch = pitch;
 		this.start_tick = start_tick;
-		this.end_tick = end_tick;
+		this.tick_length = tick_length;
 	}
+
 
 }

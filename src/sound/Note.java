@@ -6,7 +6,7 @@ package sound;
  */
 
 public class Note extends Pitch {
-  float length;
+  public float length;
 
   public Note(char c, float length){
     super(c);
