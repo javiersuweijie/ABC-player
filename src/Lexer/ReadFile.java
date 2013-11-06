@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 public class ReadFile {
 	private String filename;
 	private String str;
-	private int index=0;
 	protected Matcher matcher;
 	
 	//m?, it will appear once or not at all
