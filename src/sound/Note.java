@@ -7,9 +7,16 @@ package sound;
 
 public class Note extends Pitch {
   float length;
+  int accidentals;
+  char baseNote;
+  int octave;
 
-  public Note(char c, float length){
-    super(c);
+  public Note(float length, int accidentals, char baseNote, int octave){
+    super(baseNote);
     this.length = length;
+    this.accidentals = accidentals;
+    this.baseNote = baseNote;
+    this.octave = octave;
+    
   }
 }
