@@ -78,6 +78,7 @@ public class NoteParserTest {
 	 assertEquals(3.0, np.findNoteLength(note), 0.0);
 	 
 	 note = new Token(TokenType.NOTE, "c1/2");
+	 
 	 assertEquals(0.5, np.findNoteLength(note), 0.0);
 	 
 	 note = new Token(TokenType.NOTE, "^^C3");
