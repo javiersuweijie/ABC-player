@@ -8,10 +8,11 @@ public class NoteParserTest {
   public void testNoteParse(){
     Token note = new Token(TokenType.NOTE, "C");
     NoteParser np = new NoteParser();
-    assertEquals("It Parses the Note Correctly", np.parse(note).toMidiNote(),60);
+    assertEquals("It Parses the Note Correctly", np.parse(note).toString(),"");
   }
 
   @Test
+  
   public void testFindOctave(){
     NoteParser np = new NoteParser();
 
@@ -68,4 +69,33 @@ public class NoteParserTest {
     note = new Token(TokenType.NOTE, "_c");
     assertEquals("It does not change the accidental", 0, np.findAccidentals(note, 'C'));
   }
+  
+  @Test
+  public void getNoteLength(){
+	  
+	 Token note = new Token(TokenType.NOTE, "C3");
+	 NoteParser np = new NoteParser();
+	 assertEquals(3.0, np.findNoteLength(note), 0.0);
+	 
+	 note = new Token(TokenType.NOTE, "c1/2");
+	 
+	 assertEquals(0.5, np.findNoteLength(note), 0.0);
+	 
+	 note = new Token(TokenType.NOTE, "^^C3");
+	 assertEquals(3.0, np.findNoteLength(note), 0.0);
+	 
+	 note = new Token(TokenType.NOTE, "_c'2");
+	 assertEquals(2.0, np.findNoteLength(note), 0.0);
+	 
+	 note = new Token(TokenType.NOTE, "_G'2");
+	 assertEquals(2.0, np.findNoteLength(note), 0.0);
+	  
+
+	 
+	 
+  }
+  
+ 
+
+  
 }

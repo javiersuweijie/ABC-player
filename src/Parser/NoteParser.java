@@ -1,6 +1,7 @@
 package Parser;
 
 import sound.Note;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,12 +21,15 @@ public class NoteParser {
   }
 
   public Note parse(Token note){
-    Pattern length = Pattern.compile("/?[\\d]*");
+   // Pattern length = Pattern.compile("/?[\\d]*");
 
     int octave = findOctave(note);
     char baseNote = findBaseNote(note);
     int accidentals = findAccidentals(note, baseNote);
-    return new Note('C',1);
+    float length = findNoteLength(note);
+    
+    return new Note(length, accidentals, baseNote, octave);
+    
   }
 
   int findOctave(Token note){
@@ -75,5 +79,36 @@ public class NoteParser {
       else accidentals +=1;
     }
     return accidentals;
+  }
+  
+  float findNoteLength(Token note){
+	  	
+	  	Pattern lengthPatternWhole = Pattern.compile("([1-9]+)");
+		Pattern lengthPatternFraction = Pattern.compile("([1-9]*)" + "(\\/)" + "([1-9]*)");
+		
+		Matcher matcher = lengthPatternFraction.matcher(note.value);
+		Matcher matcher1 = lengthPatternWhole.matcher(note.value);
+		
+		if (matcher.find()){
+			String numerator = matcher.group(1);
+			String denominator = matcher.group(3);
+			float num = Float.parseFloat(numerator);
+			float den = Float.parseFloat(denominator);
+			float lengthFraction = num / den;
+			return lengthFraction;
+			
+		}
+		
+		else if (matcher1.find()){
+			String multiplier = matcher1.group(1);
+			float lengthWhole = Float.parseFloat(multiplier);
+			return lengthWhole;
+		}
+		
+		else{
+			float one = 1;
+			return one;
+		}
+	  
   }
 }

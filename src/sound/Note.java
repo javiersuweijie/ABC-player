@@ -1,15 +1,21 @@
 package sound;
 
-/**
- * Note is an extension of Pitch. It contains
- * the relative duration of the pitch to be played
- */
+public class Note {
+  float length;
+  int accidentals;
+  char baseNote;
+  int octave;
 
-public class Note extends Pitch {
-  public float length;
-
-  public Note(char c, float length){
-    super(c);
+  public Note(float length, int accidentals, char baseNote, int octave){
     this.length = length;
+    this.accidentals = accidentals;
+    this.baseNote = baseNote;
+    this.octave = octave;
+  }
+
+  public Pitch toPitch() {
+    Pitch pitch = new Pitch(baseNote);
+    pitch = pitch.octaveTranspose(octave).accidentalTranspose(accidentals);
+    return pitch;
   }
 }

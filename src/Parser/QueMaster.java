@@ -114,6 +114,9 @@ public class QueMaster {
 						  this.note_storage.clear();
 					  }
 					  break;
+			case TRIPLET: //  2/3
+			case DUPLET: // 3/2
+			case QUADRUPLET: // 3/4
 
 			default: break;
 		}
