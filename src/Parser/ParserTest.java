@@ -35,7 +35,11 @@ public class ParserTest {
 		current_token = p.next();
 		assertEquals("it returns the next Token Value", new Token(TokenType.KEY, "Cmajor").value, current_token.value);
 		assertEquals("it returns the next Token Type", new Token(TokenType.KEY, "Cmajor").type, current_token.type);
-
+		
+		while (p.next()!= null) {
+			current_token = p.next();
+		}
+		assertEquals("it returns the next Token Type", new Token(TokenType.BAR, "|]").type, current_token.type);
 	}
 
 }
