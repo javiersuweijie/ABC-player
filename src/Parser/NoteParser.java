@@ -21,15 +21,12 @@ public class NoteParser {
   }
 
   public Note parse(Token note){
-   // Pattern length = Pattern.compile("/?[\\d]*");
-
     int octave = findOctave(note);
     char baseNote = findBaseNote(note);
     int accidentals = findAccidentals(note, baseNote);
     float length = findNoteLength(note);
     
     return new Note(length, accidentals, baseNote, octave);
-    
   }
 
   int findOctave(Token note){
@@ -82,8 +79,7 @@ public class NoteParser {
   }
   
   float findNoteLength(Token note){
-	  	
-	  	Pattern lengthPatternWhole = Pattern.compile("([1-9]+)");
+    Pattern lengthPatternWhole = Pattern.compile("([1-9]+)");
 		Pattern lengthPatternFraction = Pattern.compile("([1-9]*)" + "(\\/)" + "([1-9]*)");
 		
 		Matcher matcher = lengthPatternFraction.matcher(note.value);
@@ -109,6 +105,5 @@ public class NoteParser {
 			float one = 1;
 			return one;
 		}
-	  
   }
 }
