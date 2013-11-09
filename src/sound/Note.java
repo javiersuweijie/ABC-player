@@ -6,10 +6,10 @@ package sound;
  */
 
 public class Note {
-  float length;
-  int accidentals;
-  char baseNote;
-  int octave;
+  public float length;
+  public int accidentals;
+  public char baseNote;
+  public int octave;
 
   public Note(float length, int accidentals, char baseNote, int octave){
     this.length = length;

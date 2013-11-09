@@ -1,18 +1,55 @@
 package Parser;
 
 import org.junit.Test;
+import sound.Note;
+
 import static org.junit.Assert.*;
 
 public class NoteParserTest {
+<<<<<<< HEAD
  // @Test
  /* public void testNoteParse(){
     Token note = new Token(TokenType.NOTE, "C");
     NoteParser np = new NoteParser();
     assertEquals("It Parses the Note Correctly", np.parse(note).toString(),"");
   }*/
+=======
+  double EPSILON = 0.001;
 
   @Test
-  
+  public void testNoteParse(){
+    NoteParser np = new NoteParser();
+
+    Token noteToken = new Token(TokenType.NOTE, "C");
+    Note note = np.parse(noteToken);
+    assertEquals("It parses the pitch attributes form the token","C" ,note.toPitch().toString());
+    assertEquals("It parses the note length from the token",1.0, note.length,EPSILON);
+
+    noteToken = new Token(TokenType.NOTE, "_f'1/2");
+    note = np.parse(noteToken);
+    assertEquals("It parses the pitch attributes form the token","_f'" ,note.toPitch().toString());
+    assertEquals("It parses the note length from the token",0.5, note.length,EPSILON);
+
+    np.setKey("A#m");
+
+    noteToken = new Token(TokenType.NOTE, "G,,2");
+    note = np.parse(noteToken);
+    assertEquals("It parses the correct pitch from the token","^G,," ,note.toPitch().toString());
+    assertEquals("It parses the note length from the token",2, note.length,EPSILON);
+
+    noteToken = new Token(TokenType.NOTE, "_E");
+    note = np.parse(noteToken);
+    assertEquals("It parses the correct pitch from the token","E" ,note.toPitch().toString());
+    assertEquals("It parses the note length from the token",1, note.length,EPSILON);
+
+    noteToken = new Token(TokenType.NOTE, "=b'1/8");
+    note = np.parse(noteToken);
+    assertEquals("It parses the correct pitch from the token","b'" ,note.toPitch().toString());
+    assertEquals("It parses the note length from the token",1.0/8, note.length,EPSILON);
+  }
+>>>>>>> e8832c82cfc0a4d8fff1dbe43a350e0ac5e5e4d8
+
+  @Test
   public void testFindOctave(){
     NoteParser np = new NoteParser();
 
@@ -72,7 +109,6 @@ public class NoteParserTest {
   
   @Test
   public void getNoteLength(){
-	  
 	 Token note = new Token(TokenType.NOTE, "C3");
 	 NoteParser np = new NoteParser();
 	 assertEquals(3.0, np.findNoteLength(note), 0.0);
@@ -89,6 +125,7 @@ public class NoteParserTest {
 	 
 	 note = new Token(TokenType.NOTE, "_G'2");
 	 assertEquals(2.0, np.findNoteLength(note), 0.0);
+<<<<<<< HEAD
 	 
 	 note = new Token(TokenType.NOTE, "G/2");
 	 assertEquals(0.5, np.findNoteLength(note), 0.0);
@@ -100,9 +137,7 @@ public class NoteParserTest {
 	 
 	 
 	 
+=======
+>>>>>>> e8832c82cfc0a4d8fff1dbe43a350e0ac5e5e4d8
   }
-  
- 
-
-  
 }
