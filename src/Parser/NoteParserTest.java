@@ -6,6 +6,14 @@ import sound.Note;
 import static org.junit.Assert.*;
 
 public class NoteParserTest {
+<<<<<<< HEAD
+ // @Test
+ /* public void testNoteParse(){
+    Token note = new Token(TokenType.NOTE, "C");
+    NoteParser np = new NoteParser();
+    assertEquals("It Parses the Note Correctly", np.parse(note).toString(),"");
+  }*/
+=======
   double EPSILON = 0.001;
 
   @Test
@@ -39,6 +47,7 @@ public class NoteParserTest {
     assertEquals("It parses the correct pitch from the token","b'" ,note.toPitch().toString());
     assertEquals("It parses the note length from the token",1.0/8, note.length,EPSILON);
   }
+>>>>>>> e8832c82cfc0a4d8fff1dbe43a350e0ac5e5e4d8
 
   @Test
   public void testFindOctave(){
@@ -116,5 +125,19 @@ public class NoteParserTest {
 	 
 	 note = new Token(TokenType.NOTE, "_G'2");
 	 assertEquals(2.0, np.findNoteLength(note), 0.0);
+<<<<<<< HEAD
+	 
+	 note = new Token(TokenType.NOTE, "G/2");
+	 assertEquals(0.5, np.findNoteLength(note), 0.0);
+	 
+	 note = new Token(TokenType.NOTE, "^F,,/4");
+	 assertEquals(0.25, np.findNoteLength(note), 0.0);
+	  
+
+	 
+	 
+	 
+=======
+>>>>>>> e8832c82cfc0a4d8fff1dbe43a350e0ac5e5e4d8
   }
 }
