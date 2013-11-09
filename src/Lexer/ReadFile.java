@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 
 public class ReadFile {
+
         private String filename;
         private String str;
         protected Matcher matcher;
@@ -147,7 +148,7 @@ public class ReadFile {
     public String content() throws IOException {
             //StringBuilder final_result = new StringBuilder();
             String result="";
-                    FileReader fileReader;
+    		FileReader fileReader;
             
             try {
                     fileReader = new FileReader(filename);
@@ -160,21 +161,23 @@ public class ReadFile {
             String line = "";
             
             while((line=reader.readLine())!=null){
-                    this.str=line;
-                    matcher=REGEX.matcher(this.str);                    
-                    //System.out.println(matcher.find());
-                    
-                    while(matcher.find()){
-                            String val=matcher.group(0);
-                            val=val.replaceAll("[A-Z]+:\\s*", "").replace("\n", "");
-                            
-                            for(int i=1;i<=TOKEN.length;i++){
-                                    if(matcher.group(i)!=null){
-                                            String s=TOKEN[i-1];
-                                            result =result+ s+" "+val+"\n";
-                                    }
-                            }
-                    }
+
+            	this.str=line;
+            	matcher=REGEX.matcher(this.str);            	
+            	//System.out.println(matcher.find());
+            	
+            	while(matcher.find()){
+            		String val=matcher.group(0);
+            		val=val.replaceAll("[A-Z]+:\\s*", "").replace("\n", "");
+            		
+            		for(int i=1;i<=TOKEN.length;i++){
+            			if(matcher.group(i)!=null){
+            				String s=TOKEN[i-1];
+            				result =result+ s+" "+val+"\n";
+            			}
+            		}
+            	}
+
             }
             
             fileReader.close();
@@ -185,6 +188,7 @@ public class ReadFile {
     }
     
     public static void main(String args[]){
+
             String filename="sample_abc/debussy.abc";
                 ReadFile file_reader=new ReadFile(filename);
                 try {
@@ -193,6 +197,7 @@ public class ReadFile {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                 }
+
     }
 
 }
