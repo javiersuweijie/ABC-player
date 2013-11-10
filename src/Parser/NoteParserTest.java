@@ -133,8 +133,8 @@ public class NoteParserTest {
 	 note = new Token(TokenType.NOTE, "^F,,/4");
 	 assertEquals(0.25, np.findNoteLength(note), 0.0);
 	  
-
-	 
+	 note = new Token(TokenType.NOTE, "A/");
+	 assertEquals(0.5, np.findNoteLength(note), 0.0);
 	 
 
   }
