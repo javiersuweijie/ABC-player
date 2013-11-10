@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 /**
  * Parses a Note Token into a Note Object
- * 
  */
 
 public class NoteParser {
@@ -16,8 +15,13 @@ public class NoteParser {
   public NoteParser() {
     this.current_key = "C";
   }
-  
 
+  /**
+   * Sets the key of the music.
+   * The notes are transposed to the keys default values
+   *
+   * @param Key
+   */
   public void setKey(String Key) {
     this.current_key = Key;
   }
@@ -34,11 +38,10 @@ public class NoteParser {
    * @return Note(length, accidentals, baseNote, octave)
    */
   public Note parse(Token note){
-	 
-	if (note.type == TokenType.KEY) {
-		this.setKey(note.value.toUpperCase());
-		return null;
-	}
+    if (note.type == TokenType.KEY) {
+      this.setKey(note.value.toUpperCase());
+      return null;
+    }
     int octave = findOctave(note);
     char baseNote = findBaseNote(note);
     int accidentals = findAccidentals(note, baseNote);
@@ -134,7 +137,7 @@ public class NoteParser {
   /**
    * Takes in a note token and calculate the note length of 
    * the corresponding value in the token. There are three cases 
-   * on the method, firstly is to tackle fractions, secondly is to 
+   * on the method, firstly is to tackle fractions, secondly is to
    * tackle fractions without numerator, and thirdly is
    * to tackle integers.
    * 
@@ -142,58 +145,16 @@ public class NoteParser {
    * @return float notelength
    */
   float findNoteLength(Token note){
-
-	  	
-	  	Pattern lengthPatternWhole = Pattern.compile("([1-9]+)");
-		Pattern lengthPatternFraction = Pattern.compile("([1-9]+)" + "(\\/)" + "([1-9]+)");
-		Pattern lengthPatternFraction2 = Pattern.compile("(\\/)" + "([1-9]+)");
-		Pattern justfraction = Pattern.compile("(\\/)");
-   
-
-		
-		Matcher matcher = lengthPatternFraction.matcher(note.value);
-		Matcher matcher1 = lengthPatternWhole.matcher(note.value);
-		Matcher matcher2 = lengthPatternFraction2.matcher(note.value);
-		Matcher matcher3 = justfraction.matcher(note.value);
-		
-		
-		if (matcher.find()){
-			String numerator = matcher.group(1);
-			String denominator = matcher.group(3);
-			float num = Float.parseFloat(numerator);
-			float den = Float.parseFloat(denominator);
-			float lengthFraction = num / den;
-			return lengthFraction;
-			
-		}
-	
-		
-		else if(matcher2.find()){
-			String denominator = matcher2.group(2);
-			float den = Float.parseFloat(denominator);
-			float one =1;
-			float answer = one / den;
-			return answer;
-		}
-		
-		else if(matcher3.find()){
-			float one = 1;
-			float two = 2;
-			float answer = one/two;
-			return answer;
-		}
-		
-		
-		else if (matcher1.find()){
-			String multiplier = matcher1.group(1);
-			float lengthWhole = Float.parseFloat(multiplier);
-			return lengthWhole;
-		}
-		
-	
-		else{
-			float one = 1;
-			return one;
-		}
+    Pattern lengthPattern = Pattern.compile("[a-zA-Z][',]*([1-9]*)(/?([1-9]*))");
+    Matcher matcher = lengthPattern.matcher(note.value);
+    float length = 1;
+    if (matcher.find()){
+      if (!matcher.group(1).isEmpty()) length *= Integer.parseInt(matcher.group(1));
+      if (!matcher.group(2).isEmpty()) {
+        if (!matcher.group(3).isEmpty()) length /= Integer.parseInt(matcher.group(3));
+        else length /=2;
+      }
+    }
+    return length;
   }
 }
