@@ -22,7 +22,7 @@ public class QueMaster {
 	private boolean is_repeating;
 	private ArrayList<Integer> voice_channels;
 	private ArrayList<NoteEvent> noteEventList;
-	public ArrayList<Object> noteEventStorage;
+	public ArrayList<ArrayList<Object>> noteEventStorage;
 	private int current_channel;
 	
 	//private ArrayList<NoteEvent>;
@@ -36,7 +36,8 @@ public class QueMaster {
 		this.length = (float)1/8;
 		this.voice_channels = new ArrayList<Integer>();
 		this.noteEventList = new ArrayList<NoteEvent>();
-		this.noteEventStorage = new ArrayList<Object>();
+		this.noteEventStorage = new ArrayList<ArrayList<Object>>();
+		this.noteEventStorage.add(new ArrayList<Object>());
 		this.voice_channels.add(0);
 		this.current_channel = 0;
 		this.chord = false;
@@ -112,6 +113,8 @@ public class QueMaster {
 			case VOICE: int v = Integer.valueOf(t.value);
 						while (v>voice_channels.size()) {
 							voice_channels.add(0);
+							this.noteEventStorage.add(new ArrayList<Object>());
+							System.out.println("After voice 2: "+this.noteEventStorage.size());
 						}
 						current_channel = v-1;
 						break;
@@ -123,7 +126,7 @@ public class QueMaster {
 							}
 							this.chord = !this.chord;
 						}
-						if(!is_repeating&&repeat_num!=1) this.noteEventStorage.add(t);
+						if(!is_repeating&&repeat_num!=1) this.noteEventStorage.get(current_channel).add(t);
 						break;
 			case CHORD_ST: if(repeat_num!=2) {
 								if (chord) {
@@ -132,21 +135,22 @@ public class QueMaster {
 								}
 							this.chord = !this.chord;
 							}
-							if(!is_repeating&&repeat_num!=1) this.noteEventStorage.add(t);
+							if(!is_repeating&&repeat_num!=1) this.noteEventStorage.get(current_channel).add(t);
 							break;
 						
 			case BAR: if (t.value == ":|") {
 							is_repeating = true;
 							this.repeat_num = 0;
-							for (Object note:this.noteEventStorage) {
+							for (Object note:this.noteEventStorage.get(current_channel)) {
+								if (note == null) continue;
 								if (note.getClass() == Token.class) this.read((Token)note);
 								if (note.getClass() == Note.class) this.read((Note)note);
 							}
-							this.noteEventStorage.clear();
+							this.noteEventStorage.get(current_channel).clear();
 							is_repeating = false;
 						}
 					  else if (t.value == "|:") {
-						  this.noteEventStorage.clear();
+						  this.noteEventStorage.get(current_channel).clear();
 						  this.repeat_num = 0;
 						  this.repeat_from = this.getStartTick();
 					  }
@@ -155,17 +159,17 @@ public class QueMaster {
 								this.repeat_num = 1;	
 							}
 							else if (t.value == "|[2") {
-								this.repeat_num = 2;
+								//this.repeat_num = 2;
 							}
 							break;
 			case TRIPLET: if(repeat_num!=2) this.triplet = 3;
-						  if (!is_repeating&&repeat_num!=1) this.noteEventStorage.add(t);
+						  if (!is_repeating&&repeat_num!=1) this.noteEventStorage.get(current_channel).add(t);
 						  break;
 			case DUPLET: if(repeat_num!=2) this.duplet = 2;
-						  if (!is_repeating&&repeat_num!=1) this.noteEventStorage.add(t);
+						  if (!is_repeating&&repeat_num!=1) this.noteEventStorage.get(current_channel).add(t);
 						 break;
 			case QUADRUPLET: if(repeat_num!=2) this.quadruplet = 4;
-						  if (!is_repeating&&repeat_num!=1) this.noteEventStorage.add(t);
+						  if (!is_repeating&&repeat_num!=1) this.noteEventStorage.get(current_channel).add(t);
 		      			 break;
 
 			default: break;
@@ -180,7 +184,7 @@ public class QueMaster {
 			}
 		}
 		if (!is_repeating&&repeat_num!=1) {
-			this.noteEventStorage.add(n);
+			this.noteEventStorage.get(current_channel).add(n);
 			return;
 		}
 	}
