@@ -55,7 +55,10 @@ public class Main {
                 } while (t!=null);
                 System.out.println(qm.getNoteEvents());
                 try {
-					SequencePlayer player = new SequencePlayer(120*9, 6);
+                	System.out.println(qm.getTempo());
+                	System.out.println(qm.getLength());
+                	System.out.println(qm.getMeter());
+					SequencePlayer player = new SequencePlayer((int)(qm.getTempo()),24);
 					for (NoteEvent ne:qm.getNoteEvents()) {
 						player.addNote(ne.pitch, ne.start_tick, ne.tick_length);
 					}
@@ -74,7 +77,7 @@ public class Main {
         }
 	}
 	public static void main(String arg[]) {
-        String filename="sample_abc/invention.abc";
+        String filename="sample_abc/fur_elise.abc";
 		Main.play(filename);
 	}
 }

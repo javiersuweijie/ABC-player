@@ -122,11 +122,73 @@ public class QueMasterTest {
 		qm.read(repeat_one); //start:348
 		qm.read(rest_fixture_half); //start:348 length:12
 		qm.read(note_fixture1); //start:360 length:12
+		qm.read(repeat_end); //start:372 length: 72
 		qm.read(repeat_two); 
 		qm.read(note_fixture1); 
 		qm.read(rest_fixture_half); 
-		qm.read(repeat_end); //start:372 length: 72
 		assertEquals("It should have the right start tick",444,qm.getStartTick());
+	}
+	
+	@Test
+	public void testOneTwoRepeat() {
+		QueMaster qm = new QueMaster();
+		
+		qm.read(repeat_start);
+		qm.read(note_fixture1); //start:0 length:12
+		qm.read(repeat_one); 
+		qm.read(note_fixture2); //start:12 length:48
+		qm.read(rest_fixture); //start:60 length:24
+		qm.read(repeat_end);  //start:84 length:12
+		qm.read(repeat_two);
+		qm.read(note_fixture1); //start:96 length:12
+
+		assertEquals("It should have the right start tick",108,qm.getStartTick());
+		assertEquals("It should have the right notes[0]",12,qm.getNoteEvents().get(0).tick_length);
+		assertEquals("It should have the right notes[1]",48,qm.getNoteEvents().get(1).tick_length);
+		assertEquals("It should have the right notes[2]",12,qm.getNoteEvents().get(2).tick_length);
+		assertEquals("It should have the right notes[3]",12,qm.getNoteEvents().get(3).tick_length);
+	}
+	
+	@Test
+	public void testOneTwoRepeatWithVoices() {
+		QueMaster qm = new QueMaster();
+		qm.read(voice_1);
+		qm.read(voice_2);
+		
+		qm.read(voice_1);
+		qm.read(repeat_start);
+		qm.read(note_fixture1); //start:0 length:12
+		qm.read(voice_2);
+		qm.read(repeat_start);
+		qm.read(note_fixture1); //start:0 length:12
+		
+		qm.read(voice_1);
+		qm.read(repeat_one); 
+		qm.read(note_fixture2); //start:12 length:48
+		qm.read(rest_fixture); //start:60 length:24
+		qm.read(repeat_end);  //start:84 length:12
+		qm.read(repeat_two);
+		qm.read(note_fixture1); //start:96 length:12
+		
+		qm.read(voice_2);
+		qm.read(repeat_one); 
+		qm.read(note_fixture2); //start:12 length:48
+		qm.read(rest_fixture); //start:60 length:24
+		qm.read(repeat_end);  //start:84 length:12
+		qm.read(repeat_two);
+		qm.read(note_fixture1); //start:96 length:12
+		qm.read(note_fixture1); //start:108 length:12
+		
+		qm.read(voice_1);
+		assertEquals("It should have the right start tick",108,qm.getStartTick());
+		qm.read(voice_2);
+		assertEquals("It should have the right start tick (voice2)",120,qm.getStartTick());
+		assertEquals("It should have the right notes[0]",12,qm.getNoteEvents().get(0).tick_length);
+		assertEquals("It should have the right note[0] start tick", 0,qm.getNoteEvents().get(0).start_tick);
+		assertEquals("It should have the right notes[1]",12,qm.getNoteEvents().get(1).tick_length);
+		assertEquals("It should have the right note[1] start tick", 0,qm.getNoteEvents().get(1).start_tick);
+		assertEquals("It should have the right notes[2]",48,qm.getNoteEvents().get(2).tick_length);
+		assertEquals("It should have the right notes[3]",12,qm.getNoteEvents().get(3).tick_length);
 	}
 	
 	@Test
