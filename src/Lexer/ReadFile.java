@@ -164,12 +164,10 @@ public class ReadFile {
             while((line=reader.readLine())!=null){
             	this.str=line;
             	matcher=REGEX.matcher(this.str);            	
-            	//System.out.println(matcher.find());
             	
             	while(matcher.find()){
             		String val=matcher.group(0);
             		val=val.replaceAll("[A-Z]+:\\s*", "").replace("\n", "");
-            		
             		for(int i=1;i<=TOKEN.length;i++){
             			if(matcher.group(i)!=null){
             				String s=TOKEN[i-1];
@@ -177,13 +175,14 @@ public class ReadFile {
             			}
             		}
             	}
+
             }
             
             fileReader.close();
             reader.close();
             
-            System.out.println(result);
+            //System.out.println(result);
             return result.toString();
     }
-    
+
 }

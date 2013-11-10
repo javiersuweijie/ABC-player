@@ -1,0 +1,24 @@
+package Parser;
+
+public enum TokenType {
+	COMPOSER,
+	TEMPO,
+	KEY,
+	METER,
+	LENGTH,
+	TITLE,
+	INDEX,
+	VOICE,
+	
+	BAR,
+	REPEATNO,
+	NOTE,
+	REST,
+	CHORD_ST,
+	CHORD_END,
+	TRIPLET,
+	DUPLET,
+	QUADRUPLET,
+	
+	COMMENT
+}

@@ -165,23 +165,31 @@ public class SequencePlayer {
 
             // create a new player, with 120 beats (i.e. quarter note) per
             // minute, with 2 tick per quarter note
-            player = new SequencePlayer(120, 2);
+            player = new SequencePlayer(120, 6);
 
-            player.addNote(new Pitch('C').toMidiNote(), 0, 1);
-            player.addNote(new Pitch('D').toMidiNote(), 1, 1);
-            player.addNote(new Pitch('E').toMidiNote(), 2, 1);
-            player.addNote(new Pitch('F').toMidiNote(), 3, 1);
-            player.addNote(new Pitch('G').toMidiNote(), 4, 1);
-            player.addNote(new Pitch('A').toMidiNote(), 5, 1);
-            player.addNote(new Pitch('B').toMidiNote(), 6, 1);
-            player.addNote(new Pitch('C').transpose(Pitch.OCTAVE).toMidiNote(), 7, 1);
-            player.addNote(new Pitch('B').toMidiNote(), 8, 1);
-            player.addNote(new Pitch('A').toMidiNote(), 9, 1);
-            player.addNote(new Pitch('G').toMidiNote(), 10, 1);
-            player.addNote(new Pitch('F').toMidiNote(), 11, 1);
-            player.addNote(new Pitch('E').toMidiNote(), 12, 1);
-            player.addNote(new Pitch('D').toMidiNote(), 13, 1);
-            player.addNote(new Pitch('C').toMidiNote(), 14, 1);
+            player.addNote(new Pitch('C').toMidiNote(), 0, 3);
+            player.addNote(new Pitch('D').toMidiNote(), 3, 3);
+            player.addNote(new Pitch('E').toMidiNote(), 6, 3);
+            player.addNote(new Pitch('F').toMidiNote(), 9, 3);
+            player.addNote(new Pitch('G').toMidiNote(), 12, 3);
+            player.addNote(new Pitch('A').toMidiNote(), 15, 3);
+            player.addNote(new Pitch('B').toMidiNote(), 18, 3);
+            player.addNote(new Pitch('B').toMidiNote(), 21, 3);
+            player.addNote(new Pitch('A').toMidiNote(), 24, 3);
+            player.addNote(new Pitch('G').toMidiNote(), 27, 3);
+            player.addNote(new Pitch('F').toMidiNote(), 30, 3);
+            player.addNote(new Pitch('E').toMidiNote(), 33, 3);
+            player.addNote(new Pitch('D').toMidiNote(), 36, 3);
+            player.addNote(new Pitch('C').toMidiNote(), 39, 3);
+            player.addNote(new Pitch('C').toMidiNote(), 42, 2);
+            player.addNote(new Pitch('C').toMidiNote(), 44, 2);
+            player.addNote(new Pitch('C').toMidiNote(), 46, 2);
+            player.addNote(new Pitch('C').toMidiNote(), 48, 2);
+            player.addNote(new Pitch('C').toMidiNote(), 50, 2);
+            player.addNote(new Pitch('C').toMidiNote(), 52, 2);
+            player.addNote(new Pitch('C').toMidiNote(), 54, 2);
+            player.addNote(new Pitch('C').toMidiNote(), 56, 2);
+            player.addNote(new Pitch('C').toMidiNote(), 58, 2);
 
             System.out.println(player);
 
