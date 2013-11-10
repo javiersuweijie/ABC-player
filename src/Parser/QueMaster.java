@@ -79,6 +79,12 @@ public class QueMaster {
 		this.voice_channels.set(current_channel, start_time);
 	}
 	
+	public void evenStartTick() {
+		for (int i=0;i<this.voice_channels.size();++i) {
+			this.voice_channels.set(i, this.voice_channels.get(0));
+		}
+	}
+	
 	public byte getRepeatNum() {
 		return this.repeat_num;
 	}
@@ -95,6 +101,7 @@ public class QueMaster {
 							this.initial_tempo = Integer.valueOf(t.value);
 							}
 						this.tempo = Integer.valueOf(t.value);
+						this.evenStartTick();
 						break;
 			case METER: if (t.value.length()>2) {
 							String[] s = t.value.split("/");
@@ -115,6 +122,7 @@ public class QueMaster {
 						 break;
 						 
 			case VOICE: int v = Integer.valueOf(t.value);
+						if (v==1) this.evenStartTick();
 						while (v>voice_channels.size()) {
 							voice_channels.add(0);
 							this.noteEventStorage.add(new ArrayList<Object>());
@@ -207,16 +215,16 @@ public class QueMaster {
 			length_modifier = 3.0/4;
 			--this.quadruplet;
 		}
-		int tick_length = (int) (800*3*n.length*length_modifier*(float)initial_tempo/tempo);
+		int tick_length = (int) (8*3*n.length*length_modifier*(float)initial_tempo/tempo*3564);
 		//int tick_length = (int)(8*3*n.length*length_modifier);
 		if (!chord) {
 			voice_channels.set(current_channel, ( start_tick + tick_length));
 		}
 		if (chord) {
 			chord_offset=Math.max(chord_offset, tick_length);
-			if (this.triplet>0) triplet++;
-			if (this.duplet>0)duplet++;
-			if (this.quadruplet>0)quadruplet++;
+			if (this.triplet>0&&this.triplet<2) triplet++;
+			//if (this.duplet>0&&this.duplet<1)duplet++;
+			//if (this.quadruplet>0&&this.quadruplet<3)quadruplet++;
 		}
 		if (!n.isRest()) {
 			NoteEvent ne = new NoteEvent(n.toPitch().toMidiNote(),start_tick,tick_length);

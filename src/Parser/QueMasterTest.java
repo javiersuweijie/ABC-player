@@ -217,20 +217,24 @@ public class QueMasterTest {
 		
 		qm.read(triplet);
 		qm.read(chord);
-		qm.read(note_fixture3);
-		qm.read(note_fixture4);
+		qm.read(note_fixture1);
+		qm.read(note_fixture1);
 		qm.read(note_fixture1);
 		qm.read(chord);
+		qm.read(note_fixture1);
+		qm.read(note_fixture1);
+		assertEquals("It should have right start tick",24, qm.getStartTick());
 		qm.read(note_fixture3);
 		qm.read(note_fixture3);
+		assertEquals("It should have right start tick",72, qm.getStartTick());
 		
-		assertEquals("It should have right start tick",48, qm.getStartTick());
 	}
 	
 	@Test
 	public void restRepeatWithChords() {
 		QueMaster qm = new QueMaster();
 		qm.read(note_fixture3); //start:0 length:24
+		
 		qm.read(note_fixture3); //start:24 length:24
 		qm.read(repeat_one); //start:48
 		qm.read(duplet); 

@@ -55,7 +55,7 @@ public class Main {
                 	System.out.println(qm.getLength());
                 	System.out.println(qm.getMeter());
                 	System.out.println(qm.getVoiceChannels().toString());
-					SequencePlayer player = new SequencePlayer((int)(qm.getTempo()*100),24);
+					SequencePlayer player = new SequencePlayer((int)(qm.getTempo()*3564),24);
 					for (NoteEvent ne:qm.getNoteEvents()) {
 						player.addNote(ne.pitch, ne.start_tick, ne.tick_length);
 					}
@@ -74,7 +74,7 @@ public class Main {
         }
 	}
 	public static void main(String arg[]) {
-        String filename="sample_abc/debussy.abc";
+        String filename="sample_abc/national_anthem.abc";
 		Main.play(filename);
 	}
 }
