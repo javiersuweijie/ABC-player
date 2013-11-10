@@ -52,7 +52,7 @@ public class NoteParser {
   }
 
   char findBaseNote(Token note) {
-    Pattern letter = Pattern.compile("[a-gA-G]");
+    Pattern letter = Pattern.compile("[a-gA-GzZ]");
     Matcher matcher = letter.matcher(note.value);
     char baseNote = 'C';
     if (matcher.find()) baseNote = matcher.group().toUpperCase().charAt(0);

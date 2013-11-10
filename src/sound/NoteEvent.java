@@ -12,5 +12,8 @@ public class NoteEvent {
 		this.tick_length = tick_length;
 	}
 
+	public NoteEvent startTimeOffset(int offset) {
+		return new NoteEvent(this.pitch,this.start_tick+offset,this.tick_length);
+	}
 
 }
