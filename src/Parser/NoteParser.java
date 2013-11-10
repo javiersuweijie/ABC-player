@@ -16,6 +16,7 @@ public class NoteParser {
   public NoteParser() {
     this.current_key = "C";
   }
+  
 
   public void setKey(String Key) {
     this.current_key = Key;
@@ -146,13 +147,14 @@ public class NoteParser {
 	  	Pattern lengthPatternWhole = Pattern.compile("([1-9]+)");
 		Pattern lengthPatternFraction = Pattern.compile("([1-9]+)" + "(\\/)" + "([1-9]+)");
 		Pattern lengthPatternFraction2 = Pattern.compile("(\\/)" + "([1-9]+)");
-
+		Pattern justfraction = Pattern.compile("(\\/)");
    
 
 		
 		Matcher matcher = lengthPatternFraction.matcher(note.value);
 		Matcher matcher1 = lengthPatternWhole.matcher(note.value);
 		Matcher matcher2 = lengthPatternFraction2.matcher(note.value);
+		Matcher matcher3 = justfraction.matcher(note.value);
 		
 		
 		if (matcher.find()){
@@ -174,6 +176,12 @@ public class NoteParser {
 			return answer;
 		}
 		
+		else if(matcher3.find()){
+			float one = 1;
+			float two = 2;
+			float answer = one/two;
+			return answer;
+		}
 		
 		
 		else if (matcher1.find()){
