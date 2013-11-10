@@ -118,7 +118,6 @@ public class QueMaster {
 						while (v>voice_channels.size()) {
 							voice_channels.add(0);
 							this.noteEventStorage.add(new ArrayList<Object>());
-							System.out.println("After voice 2: "+this.noteEventStorage.size());
 						}
 						current_channel = v-1;
 						break;
@@ -208,8 +207,8 @@ public class QueMaster {
 			length_modifier = 3.0/4;
 			--this.quadruplet;
 		}
-		//int tick_length = (int) (80*3*n.length*length_modifier*((float)initial_tempo/tempo));
-		int tick_length = (int)(8*3*n.length*length_modifier);
+		int tick_length = (int) (800*3*n.length*length_modifier*(float)initial_tempo/tempo);
+		//int tick_length = (int)(8*3*n.length*length_modifier);
 		if (!chord) {
 			voice_channels.set(current_channel, ( start_tick + tick_length));
 		}

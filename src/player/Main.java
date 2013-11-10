@@ -37,7 +37,6 @@ public class Main {
         NoteParser np = new NoteParser();
         try {
                 lexed_string = file_reader.content();
-                System.out.println(lexed_string);
                 Parser token_parser = new Parser(lexed_string);
                 Token t = null;
                 do {
@@ -53,13 +52,12 @@ public class Main {
                 	}
                 	else qm.read(t);
                 } while (t!=null);
-                System.out.println(qm.getNoteEvents());
                 try {
                 	System.out.println(qm.getTempo());
                 	System.out.println(qm.getLength());
                 	System.out.println(qm.getMeter());
                 	System.out.println(qm.getVoiceChannels().toString());
-					SequencePlayer player = new SequencePlayer((int)(qm.getTempo()*1),24);
+					SequencePlayer player = new SequencePlayer((int)(qm.getTempo()*100),24);
 					for (NoteEvent ne:qm.getNoteEvents()) {
 						player.addNote(ne.pitch, ne.start_tick, ne.tick_length);
 					}
