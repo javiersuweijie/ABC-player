@@ -43,13 +43,11 @@ public class Main {
                 do {
                 	t = token_parser.next();
                 	if (t==null) break;
-                	note = null;
                     System.out.println(t);
+                  if (t.isKey()) np.setKey(t.getValue());
                 	if (t.isNote()) {
                 		note = np.parse(t);
-                		if (note != null) {
-                			qm.read(note);
-                		}
+                    qm.read(note);
                 	}
                 	else qm.read(t);
                 } while (t!=null);
