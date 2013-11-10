@@ -58,7 +58,8 @@ public class Main {
                 	System.out.println(qm.getTempo());
                 	System.out.println(qm.getLength());
                 	System.out.println(qm.getMeter());
-					SequencePlayer player = new SequencePlayer((int)(qm.getTempo()),24);
+                	System.out.println(qm.getVoiceChannels().toString());
+					SequencePlayer player = new SequencePlayer((int)(qm.getTempo()*1),24);
 					for (NoteEvent ne:qm.getNoteEvents()) {
 						player.addNote(ne.pitch, ne.start_tick, ne.tick_length);
 					}
@@ -77,7 +78,7 @@ public class Main {
         }
 	}
 	public static void main(String arg[]) {
-        String filename="sample_abc/fur_elise.abc";
+        String filename="sample_abc/debussy.abc";
 		Main.play(filename);
 	}
 }

@@ -10,6 +10,7 @@ import sound.*;
 public class QueMaster {
 	
 	private int tempo;
+	private int initial_tempo;
 	private float meter;
 	private float length;
 	private int duplet;
@@ -31,7 +32,7 @@ public class QueMaster {
  * 	
  */
 	public QueMaster() {
-		this.tempo = 60;
+		this.tempo = 0;
 		this.meter = 1;
 		this.length = (float)1/8;
 		this.voice_channels = new ArrayList<Integer>();
@@ -47,7 +48,7 @@ public class QueMaster {
 	}
 
 	public int getTempo() {
-		return this.tempo;
+		return this.initial_tempo;
 	}
 	
 	public float getMeter() {
@@ -90,7 +91,10 @@ public class QueMaster {
 	 */
 	public void read(Token t) {
 		switch (t.type) {
-			case TEMPO: this.tempo = Integer.valueOf(t.value);
+			case TEMPO: if (this.tempo == 0){ 
+							this.initial_tempo = Integer.valueOf(t.value);
+							}
+						this.tempo = Integer.valueOf(t.value);
 						break;
 			case METER: if (t.value.length()>2) {
 							String[] s = t.value.split("/");
@@ -138,7 +142,7 @@ public class QueMaster {
 							if(!is_repeating&&repeat_num!=1) this.noteEventStorage.get(current_channel).add(t);
 							break;
 						
-			case BAR: if (t.value == ":|") {
+			case BAR: if (t.value.equalsIgnoreCase(":|")) {
 							is_repeating = true;
 							this.repeat_num = 0;
 							for (Object note:this.noteEventStorage.get(current_channel)) {
@@ -149,16 +153,16 @@ public class QueMaster {
 							this.noteEventStorage.get(current_channel).clear();
 							is_repeating = false;
 						}
-					  else if (t.value == "|:") {
+					  else if (t.value.equalsIgnoreCase("|:")) {
 						  this.noteEventStorage.get(current_channel).clear();
 						  this.repeat_num = 0;
 						  this.repeat_from = this.getStartTick();
 					  }
 					  break;
-			case REPEATNO: if (t.value == "|[1") {
+			case REPEATNO: if (t.value.equalsIgnoreCase("[1")) {
 								this.repeat_num = 1;	
 							}
-							else if (t.value == "|[2") {
+							else if (t.value.equalsIgnoreCase("[2")) {
 								//this.repeat_num = 2;
 							}
 							break;
@@ -204,13 +208,16 @@ public class QueMaster {
 			length_modifier = 3.0/4;
 			--this.quadruplet;
 		}
-		int tick_length = (int) (8*3*n.length*length_modifier);
-
+		//int tick_length = (int) (80*3*n.length*length_modifier*((float)initial_tempo/tempo));
+		int tick_length = (int)(8*3*n.length*length_modifier);
 		if (!chord) {
 			voice_channels.set(current_channel, ( start_tick + tick_length));
 		}
 		if (chord) {
 			chord_offset=Math.max(chord_offset, tick_length);
+			if (this.triplet>0) triplet++;
+			if (this.duplet>0)duplet++;
+			if (this.quadruplet>0)quadruplet++;
 		}
 		if (!n.isRest()) {
 			NoteEvent ne = new NoteEvent(n.toPitch().toMidiNote(),start_tick,tick_length);

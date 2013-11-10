@@ -18,8 +18,8 @@ public class QueMasterTest {
 	Token chord = new Token(TokenType.CHORD_ST, "[");
 	Token repeat_start = new Token(TokenType.BAR, "|:");
 	Token repeat_end = new Token(TokenType.BAR, ":|");
-	Token repeat_one = new Token(TokenType.REPEATNO,"|[1");
-	Token repeat_two = new Token(TokenType.REPEATNO,"|[2");
+	Token repeat_one = new Token(TokenType.REPEATNO,"[1");
+	Token repeat_two = new Token(TokenType.REPEATNO,"[2");
 	Token duplet = new Token(TokenType.DUPLET,"");
 	Token triplet = new Token(TokenType.TRIPLET, "");
 	Token quadruplet = new Token(TokenType.QUADRUPLET,"");
@@ -34,7 +34,6 @@ public class QueMasterTest {
 	@Test
 	public void testHeader() {
 		QueMaster qm = new QueMaster();
-		assertEquals("it has proper default tempo", 60, qm.getTempo());
 		qm.read(tempo);
 		assertEquals("it sets tempo correctly", 120, qm.getTempo());
 		qm.read(length);
@@ -156,10 +155,8 @@ public class QueMasterTest {
 		qm.read(voice_2);
 		
 		qm.read(voice_1);
-		qm.read(repeat_start);
 		qm.read(note_fixture1); //start:0 length:12
 		qm.read(voice_2);
-		qm.read(repeat_start);
 		qm.read(note_fixture1); //start:0 length:12
 		
 		qm.read(voice_1);
@@ -207,12 +204,27 @@ public class QueMasterTest {
 		qm.read(note_fixture1);
 		qm.read(note_fixture1);
 		qm.read(note_fixture1);
-		System.out.println(qm.noteEventStorage.toString());
 		qm.read(repeat_end); //start:84 length:84
 		
 		assertEquals("It should have the right start tick",168,qm.getStartTick());
 		assertEquals("It should have the right duplet note length",18,qm.getNoteEvents().get(2).tick_length);
 		assertEquals("It should have the right quad note length",9,qm.getNoteEvents().get(6).tick_length);
+	}
+	
+	@Test
+	public void testTuplesWithChords() {
+		QueMaster qm = new QueMaster();
+		
+		qm.read(triplet);
+		qm.read(chord);
+		qm.read(note_fixture3);
+		qm.read(note_fixture4);
+		qm.read(note_fixture1);
+		qm.read(chord);
+		qm.read(note_fixture3);
+		qm.read(note_fixture3);
+		
+		assertEquals("It should have right start tick",48, qm.getStartTick());
 	}
 	
 	@Test
