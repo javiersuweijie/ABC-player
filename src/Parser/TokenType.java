@@ -11,7 +11,9 @@ public enum TokenType {
 	VOICE,
 	
 	BAR,
+	REPEAT_NUM,
 	NOTE,
+	REST,
 	CHORD,
 	TRIPLET,
 	DUPLET,

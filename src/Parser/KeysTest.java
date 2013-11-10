@@ -1,14 +1,10 @@
 package Parser;
-
-
-
-import static org.junit.Assert.*;
-
 import org.junit.Test;
+import static org.junit.Assert.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class keysTest {
+public class KeysTest {
 
 	@Test
 	public void test() {
@@ -21,8 +17,8 @@ public class keysTest {
 		keyset.put("A", "_A");
 		keyset.put("B", "_B");
 		
-		assertEquals(keyset, keys.getKey("Fm"));
-		assertEquals(keyset, keys.getKey("Ab"));
+		assertEquals(keyset, Keys.getKey("Fm"));
+		assertEquals(keyset, Keys.getKey("Ab"));
 		
 		Map<String, String> keyset1 = new HashMap<String, String>();
 		keyset1.put("C",	"^C");
@@ -33,8 +29,8 @@ public class keysTest {
 		keyset1.put("A", "^A");
 		keyset1.put("B", "^B");
 		
-		assertEquals(keyset1, keys.getKey("C#"));
-		assertEquals(keyset1, keys.getKey("A#m"));
+		assertEquals(keyset1, Keys.getKey("C#"));
+		assertEquals(keyset1, Keys.getKey("A#m"));
 	
 		
 	}
