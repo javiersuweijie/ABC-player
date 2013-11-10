@@ -33,6 +33,11 @@ public class NoteParser {
    * @return Note(length, accidentals, baseNote, octave)
    */
   public Note parse(Token note){
+	 
+	if (note.type == TokenType.KEY) {
+		this.setKey(note.value.toUpperCase());
+		return null;
+	}
     int octave = findOctave(note);
     char baseNote = findBaseNote(note);
     int accidentals = findAccidentals(note, baseNote);

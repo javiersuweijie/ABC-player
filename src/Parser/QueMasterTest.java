@@ -15,11 +15,11 @@ public class QueMasterTest {
 	Token length = new Token(TokenType.LENGTH,"1/4");
 	Token voice_1 = new Token(TokenType.VOICE,"1");
 	Token voice_2 = new Token(TokenType.VOICE, "2");
-	Token chord = new Token(TokenType.CHORD, "start");
+	Token chord = new Token(TokenType.CHORD_ST, "[");
 	Token repeat_start = new Token(TokenType.BAR, "|:");
 	Token repeat_end = new Token(TokenType.BAR, ":|");
-	Token repeat_one = new Token(TokenType.REPEAT_NUM,"|[1");
-	Token repeat_two = new Token(TokenType.REPEAT_NUM,"|[2");
+	Token repeat_one = new Token(TokenType.REPEATNO,"|[1");
+	Token repeat_two = new Token(TokenType.REPEATNO,"|[2");
 	Token duplet = new Token(TokenType.DUPLET,"");
 	Token triplet = new Token(TokenType.TRIPLET, "");
 	Token quadruplet = new Token(TokenType.QUADRUPLET,"");

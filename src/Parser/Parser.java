@@ -22,4 +22,10 @@ public class Parser {
 		++current_position;
 		return t;
 	}
+	public Token getToken(String s) {
+		String[] a = s.split(" ");
+		TokenType token = TokenType.valueOf(a[0]);
+		String value = a[1];
+		return new Token(token,value);
+	}
 }

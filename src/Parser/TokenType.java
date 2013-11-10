@@ -11,10 +11,11 @@ public enum TokenType {
 	VOICE,
 	
 	BAR,
-	REPEAT_NUM,
+	REPEATNO,
 	NOTE,
 	REST,
-	CHORD,
+	CHORD_ST,
+	CHORD_END,
 	TRIPLET,
 	DUPLET,
 	QUADRUPLET,

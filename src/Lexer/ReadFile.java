@@ -170,7 +170,7 @@ public class ReadFile {
             		String val=matcher.group(0);
             		
             		val=val.replaceAll("[A-Z]+:\\s*", "").replace("\n", "");
-            		System.out.println(val);
+            		//System.out.println(val);
             		for(int i=1;i<=TOKEN.length;i++){
             			if(matcher.group(i)!=null){
             				String s=TOKEN[i-1];
@@ -184,21 +184,8 @@ public class ReadFile {
             fileReader.close();
             reader.close();
             
-            System.out.println(result);
+            //System.out.println(result);
             return result.toString();
-    }
-    
-    public static void main(String args[]){
-
-            String filename="sample_abc/debussy.abc";
-                ReadFile file_reader=new ReadFile(filename);
-                try {
-                        file_reader.content();
-                } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                }
-
     }
 
 }

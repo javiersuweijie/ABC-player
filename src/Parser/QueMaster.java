@@ -95,7 +95,11 @@ public class QueMaster {
 							String[] s = t.value.split("/");
 							this.meter = Float.valueOf(s[0])/Float.valueOf(s[1]);
 						}
-						else this.meter = Float.valueOf(t.value);
+						else {
+							if (t.value.equals("C")) this.meter = 1;
+							else if (t.value.equalsIgnoreCase("C")) this.meter = (float)0.5;
+							else this.meter = Float.valueOf(t.value);
+						}
 						break;
 						
 			case LENGTH: if (t.value.length()>2) {
@@ -112,7 +116,7 @@ public class QueMaster {
 						current_channel = v-1;
 						break;
 
-			case CHORD: if(repeat_num!=2) {
+			case CHORD_END: if(repeat_num!=2) {
 							if (chord) {
 								this.setStartTick(this.getStartTick()+chord_offset);
 								this.chord_offset = 0;
@@ -121,6 +125,15 @@ public class QueMaster {
 						}
 						if(!is_repeating&&repeat_num!=1) this.noteEventStorage.add(t);
 						break;
+			case CHORD_ST: if(repeat_num!=2) {
+								if (chord) {
+									this.setStartTick(this.getStartTick()+chord_offset);
+									this.chord_offset = 0;
+								}
+							this.chord = !this.chord;
+							}
+							if(!is_repeating&&repeat_num!=1) this.noteEventStorage.add(t);
+							break;
 						
 			case BAR: if (t.value == ":|") {
 							is_repeating = true;
@@ -138,7 +151,7 @@ public class QueMaster {
 						  this.repeat_from = this.getStartTick();
 					  }
 					  break;
-			case REPEAT_NUM: if (t.value == "|[1") {
+			case REPEATNO: if (t.value == "|[1") {
 								this.repeat_num = 1;	
 							}
 							else if (t.value == "|[2") {
