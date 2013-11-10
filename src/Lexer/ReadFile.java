@@ -168,8 +168,9 @@ public class ReadFile {
             	
             	while(matcher.find()){
             		String val=matcher.group(0);
-            		val=val.replaceAll("[A-Z]+:\\s*", "").replace("\n", "");
             		
+            		val=val.replaceAll("[A-Z]+:\\s*", "").replace("\n", "");
+            		System.out.println(val);
             		for(int i=1;i<=TOKEN.length;i++){
             			if(matcher.group(i)!=null){
             				String s=TOKEN[i-1];

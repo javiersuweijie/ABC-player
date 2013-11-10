@@ -136,15 +136,14 @@ public class NoteParser {
    * @return float notelength
    */
   float findNoteLength(Token note){
-<<<<<<< HEAD
+
 	  	
 	  	Pattern lengthPatternWhole = Pattern.compile("([1-9]+)");
 		Pattern lengthPatternFraction = Pattern.compile("([1-9]+)" + "(\\/)" + "([1-9]+)");
 		Pattern lengthPatternFraction2 = Pattern.compile("(\\/)" + "([1-9]+)");
-=======
-    Pattern lengthPatternWhole = Pattern.compile("([1-9]+)");
-		Pattern lengthPatternFraction = Pattern.compile("([1-9]*)" + "(\\/)" + "([1-9]*)");
->>>>>>> e8832c82cfc0a4d8fff1dbe43a350e0ac5e5e4d8
+
+   
+
 		
 		Matcher matcher = lengthPatternFraction.matcher(note.value);
 		Matcher matcher1 = lengthPatternWhole.matcher(note.value);
