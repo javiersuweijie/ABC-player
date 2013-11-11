@@ -11,12 +11,8 @@ import java.util.regex.Pattern;
  */
 
 public class NoteParser {
-<<<<<<< HEAD
-  String current_key;
-  Map<String, String> defaultAccidentals;
-=======
   public String current_key;
->>>>>>> fcbf153794fdb7cbbec43076859f2e641116acfe
+  Map<String, String> defaultAccidentals;
 
   public NoteParser() {
     this.current_key = "C";
