@@ -31,7 +31,7 @@ public class NoteParserTest {
 
     noteToken = new Token(TokenType.NOTE, "_E");
     note = np.parse(noteToken);
-    assertEquals("It parses the correct pitch from the token","E" ,note.toPitch().toString());
+    assertEquals("It parses the correct pitch from the token","_E" ,note.toPitch().toString());
     assertEquals("It parses the note length from the token",1, note.length,EPSILON);
 
     noteToken = new Token(TokenType.NOTE, "=b'1/8");
