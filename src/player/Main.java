@@ -74,7 +74,7 @@ public class Main {
         }
 	}
 	public static void main(String arg[]) {
-        String filename="sample_abc/invention.abc";
+        String filename="sample_abc/fur_elise.abc";
 		Main.play(filename);
 	}
 }
