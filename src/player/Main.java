@@ -50,7 +50,8 @@ public class Main {
                 	System.out.println(qm.getLength());
                 	System.out.println(qm.getMeter());
                 	System.out.println(qm.getVoiceChannels().toString());
-					SequencePlayer player = new SequencePlayer((int)(qm.getTempo()),24);
+					SequencePlayer player = new SequencePlayer((int)(qm.getTempo())*3*11*2*5,24);
+					//SequencePlayer player = new SequencePlayer((int)(qm.getTempo()),24);
 					for (NoteEvent ne:qm.getNoteEvents()) {
 						player.addNote(ne.pitch, ne.start_tick, ne.tick_length);
 					}
@@ -69,7 +70,7 @@ public class Main {
         }
 	}
 	public static void main(String arg[]) {
-        String filename="sample_abc/little_night_music.abc";
+        String filename="sample_abc/debussy.abc";
 		Main.play(filename);
 	}
 }

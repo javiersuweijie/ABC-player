@@ -383,8 +383,8 @@ public class QueMaster {
 			length_modifier = 3.0/4;
 			--this.quadruplet;
 		}
-		//int tick_length = (int) (8*3*n.length*length_modifier*(float)initial_tempo/tempo*3564);
-		int tick_length = (int)(8*3*n.length*length_modifier);
+		int tick_length = (int) (8*3*n.length*length_modifier*(double)initial_tempo/tempo*3*11*2*5);
+		//int tick_length = (int)(8*3*n.length*length_modifier);
 		if (!chord) {
 			voice_channels.set(current_channel, ( start_tick + tick_length));
 		}
