@@ -23,51 +23,51 @@ public class Keys {
 		else if(K.equals("F")|| K.equals("Dm")){
 			keyset.put("B", "_B");
 		}
-		else if(K =="D"|K=="Bm"){
+		else if(K.equals("D")||K.equals("Bm")){
 			keyset.put("F", "^F");
 			keyset.put("C", "^C");
 		}
-		else if(K=="Bb"|K=="Gm"){
+		else if(K.equals("Bb")||K.equals("Gm")){
 			keyset.put("B", "_B");
 			keyset.put("E", "_E");
 		}
-		else if(K=="A"|K=="F#m"){
+		else if(K.equals("A")||K.equals("F#m")){
 			keyset.put("C", "^C");
 			keyset.put("F", "^F");
 			keyset.put("G","^G");
 		}
-		else if(K=="Eb"|K=="Cm"){
+		else if(K.equals("Eb")||K.equals("Cm")){
 			keyset.put("E", "_E");
 			keyset.put("A", "_A");
 			keyset.put("B", "_B");
 		}
-		else if(K=="E"|K=="C#m"){
+		else if(K.equals("E")||K.equals("C#m")){
 			keyset.put("F","^F");
 			keyset.put("G","^G");
 			keyset.put("C", "^C");
 			keyset.put("D", "^D");
 		}
-		else if(K.equals("Fm")||K=="Ab"){
+		else if(K.equals("Fm")||K.equals("Ab")){
 			keyset.put("A","_A");	
 			keyset.put("B", "_B");
 			keyset.put("D","_D");
 			keyset.put("E", "_E");
 		}
-		else if(K=="B"|K=="G#m"){
+		else if(K.equals("B")||K.equals("G#m")){
 			keyset.put("A","^A");
 			keyset.put("C", "^C");
 			keyset.put("D", "^D");
 			keyset.put("F","^F");
 			keyset.put("G", "^G");
 		}
-		else if(K=="Db"|K=="Bbm"){
+		else if(K.equals("Db")||K.equals("Bbm")){
 			keyset.put("G", "_G");
 			keyset.put("A","_A");
 			keyset.put("B","_B");
 			keyset.put("D", "_D");
 			keyset.put("E","_E");
 		}
-		else if(K=="F#"|K=="D#m"){
+		else if(K.equals("F#")||K.equals("D#m")){
 			keyset.put("A","^A");
 			keyset.put("C", "^C");
 			keyset.put("D","^D");
@@ -75,7 +75,7 @@ public class Keys {
 			keyset.put("G","^G");
 			keyset.put("F","^F");
 		}
-		else if(K=="Gb"|K=="Ebm"){
+		else if(K.equals("Gb")||K.equals("Ebm")){
 			keyset.put("G","_G");
 			keyset.put("A","_A");
 			keyset.put("B", "_B");
@@ -83,7 +83,7 @@ public class Keys {
 			keyset.put("D","_D");
 			keyset.put("E","_E");
 		}
-		else if(K=="C#"|K=="A#m"){
+		else if(K.equals("C#")||K.equals("A#m")){
 			keyset.put("A","^A");
 			keyset.put("B","^B");
 			keyset.put("C","^C");
@@ -92,7 +92,7 @@ public class Keys {
 			keyset.put("F","^F");
 			keyset.put("G","^G");
 		}
-		else if(K=="Cb"|K=="Abm"){
+		else if(K.equals("Cb")||K.equals("Abm")){
 			keyset.put("C","_C");
 			keyset.put("D","_D");
 			keyset.put("E","_E");

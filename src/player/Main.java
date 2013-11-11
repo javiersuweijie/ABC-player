@@ -70,11 +70,10 @@ public class Main {
         }
 	}
 	public static void main(String arg[]) {
-<<<<<<< HEAD
+
+ 
         String filename="sample_abc/fur_elise.abc";
-=======
-        String filename="sample_abc/debussy.abc";
->>>>>>> 16f3106bc3800cd057739a8160395bfc6a4ef5ce
+
 		Main.play(filename);
 	}
 }
