@@ -31,7 +31,7 @@ public class LexerBody {
 		System.out.println("[2 "+ Pattern.matches(reg9, "[2")); //returns true
 		
 		//Comment: % osdif
-		String reg2 = "(\\%)"; 
+		String reg2 = "(\\%$|\\%\\s*[A-Za-z\\s*0-9\\,\\.\\!]+$|\\%\\s*m[0-9]+\\-[0-9]+$)"; 
 		System.out.println("% "+ Pattern.matches(reg2, "%")); //returns true
 
 		//Chord start: [   

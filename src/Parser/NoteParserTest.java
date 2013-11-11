@@ -6,8 +6,6 @@ import sound.Note;
 import static org.junit.Assert.*;
 
 public class NoteParserTest {
-
-
   double EPSILON = 0.001;
 
   @Test
@@ -41,7 +39,6 @@ public class NoteParserTest {
     assertEquals("It parses the correct pitch from the token","b'" ,note.toPitch().toString());
     assertEquals("It parses the note length from the token",1.0/8, note.length,EPSILON);
   }
-
 
   @Test
   public void testFindOctave(){
@@ -84,6 +81,11 @@ public class NoteParserTest {
     Token note = new Token(TokenType.NOTE, "_C");
     assertEquals("It reduces the accidental by 1", -1, np.findAccidentals(note, 'C'));
 
+    note = new Token(TokenType.NOTE, "c''");
+    assertEquals("It remembers the previous accidental", -1, np.findAccidentals(note, 'C'));
+    np.resetDefaultAccidentals();
+    assertEquals("It resets back to default", 0, np.findAccidentals(note, 'C'));
+
     note = new Token(TokenType.NOTE, "^C");
     assertEquals("It increases the accidental by 1", 1, np.findAccidentals(note, 'C'));
 
@@ -95,10 +97,10 @@ public class NoteParserTest {
     assertEquals("It increases the accidental by 1", 1, np.findAccidentals(note, 'C'));
     note = new Token(TokenType.NOTE, "=c");
     assertEquals("It does not change the accidental", 0, np.findAccidentals(note, 'C'));
-    note = new Token(TokenType.NOTE, "^c");
-    assertEquals("It does not change the accidental", 2, np.findAccidentals(note, 'C'));
     note = new Token(TokenType.NOTE, "_c");
-    assertEquals("It does not change the accidental", 0, np.findAccidentals(note, 'C'));
+    assertEquals("It changes the accidental by -1", -1, np.findAccidentals(note, 'C'));
+    note = new Token(TokenType.NOTE, "c");
+    assertEquals("It remembers the previous accidental", -1, np.findAccidentals(note, 'C'));
   }
   
   @Test
@@ -139,5 +141,14 @@ public class NoteParserTest {
 	 
 	 note = new Token(TokenType.NOTE, "F/");
 	 assertEquals(0.5, np.findNoteLength(note),0.0);
+  }
+  @Test
+  public void testGmajor() {
+	  NoteParser np = new NoteParser();
+	  Token note = new Token(TokenType.NOTE,"F");
+	  Token key = new Token(TokenType.KEY, "G ");
+	  np.setKey(key.getValue());
+	  assertEquals(1,np.parse(note).accidentals);
+	  assertEquals(66,np.parse(note).toPitch().toMidiNote());
   }
 }

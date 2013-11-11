@@ -133,13 +133,14 @@ public class ReadFile {
                         "|"+
                         "(\\(2)" +                                 //duplet
                         "|"+
-                        "(\\%)"                                    //comment
+                        "(\\%$|\\%\\s*[A-Za-z\\s*0-9\\,\\.\\!]+$|\\%\\s*m[0-9]+\\-[0-9]+$)"   //comment
                         );                                        
+
     
-    static final String[] TOKEN={
-            "INDEX", "TITLE", "COMPOSER", "LENGTH", "METER", "TEMPO", "VOICE", "KEY",
-            "NOTE", "REST", "BAR", "REPEATNO", "CHORD_ST", "CHORD_END", "QUADRUPLET", "TRIPLET", "DUPLET", "COMMENT"
-    };
+	static final String[] TOKEN={
+        "INDEX", "TITLE", "COMPOSER", "LENGTH", "METER", "TEMPO", "VOICE", "KEY",
+        "NOTE", "REST", "BAR", "REPEATNO", "CHORD_ST", "CHORD_END", "QUADRUPLET", "TRIPLET", "DUPLET", "COMMENT"
+	};
     
     public ReadFile(String filename) {
         this.filename= filename;
@@ -161,15 +162,11 @@ public class ReadFile {
             String line = "";
             
             while((line=reader.readLine())!=null){
-
             	this.str=line;
-            	System.out.println(line);
             	matcher=REGEX.matcher(this.str);            	
-            	//System.out.println(matcher.find());
             	
             	while(matcher.find()){
             		String val=matcher.group(0);
-
             		val=val.replaceAll("[A-Z]+:\\s*", "").replace("\n", "");
             		for(int i=1;i<=TOKEN.length;i++){
             			if(matcher.group(i)!=null){
@@ -184,7 +181,7 @@ public class ReadFile {
             fileReader.close();
             reader.close();
             
-            //System.out.println(result);
+            System.out.println(result);
             return result.toString();
     }
 

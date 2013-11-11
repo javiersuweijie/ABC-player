@@ -14,13 +14,13 @@ public class Keys {
 		keyset.put("A", "A");
 		keyset.put("B", "B");
 		
-		if (K == "C"| K == "Am"){
+		if (K.equals("C")|| K.equals("Am")){
 			return keyset;
 		}
-		else if(K == "G"| K == "Em"){
+		else if(K.equals("G")|| K.equals("Em")){
 				keyset.put("F", "^F");
 		}
-		else if(K == "F"| K == "Dm"){
+		else if(K.equals("F")|| K.equals("Dm")){
 			keyset.put("B", "_B");
 		}
 		else if(K =="D"|K=="Bm"){
@@ -47,7 +47,7 @@ public class Keys {
 			keyset.put("C", "^C");
 			keyset.put("D", "^D");
 		}
-		else if(K=="Fm"|K=="Ab"){
+		else if(K.equals("Fm")||K=="Ab"){
 			keyset.put("A","_A");	
 			keyset.put("B", "_B");
 			keyset.put("D","_D");

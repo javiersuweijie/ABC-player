@@ -13,6 +13,7 @@ import Parser.NoteParser;
 import Parser.Parser;
 import Parser.QueMaster;
 import Parser.Token;
+import Parser.TokenType;
 
 /**
  * Main entry point of your application.
@@ -33,29 +34,24 @@ public class Main {
         String lexed_string;
         ReadFile file_reader=new ReadFile(file);
         QueMaster qm = new QueMaster();
-        Note note;
-        NoteParser np = new NoteParser();
         try {
                 lexed_string = file_reader.content();
-                System.out.println(lexed_string);
                 Parser token_parser = new Parser(lexed_string);
                 Token t = null;
                 do {
                 	t = token_parser.next();
                 	if (t==null) break;
-                	note = null;
-                    System.out.println(t);
-                	if (t.isNote()) {
-                		note = np.parse(t);
-                		if (note != null) {
-                			qm.read(note);
-                		}
+                	else {
+                		qm.read(t);
                 	}
-                	else qm.read(t);
                 } while (t!=null);
-                System.out.println(qm.getNoteEvents());
                 try {
-					SequencePlayer player = new SequencePlayer(120*9, 6);
+                	System.out.println(qm.getTempo());
+                	System.out.println(qm.getLength());
+                	System.out.println(qm.getMeter());
+                	System.out.println(qm.getVoiceChannels().toString());
+					SequencePlayer player = new SequencePlayer((int)(qm.getTempo())*3*11*2*5,24);
+					//SequencePlayer player = new SequencePlayer((int)(qm.getTempo()),24);
 					for (NoteEvent ne:qm.getNoteEvents()) {
 						player.addNote(ne.pitch, ne.start_tick, ne.tick_length);
 					}
@@ -74,7 +70,11 @@ public class Main {
         }
 	}
 	public static void main(String arg[]) {
+<<<<<<< HEAD
         String filename="sample_abc/fur_elise.abc";
+=======
+        String filename="sample_abc/debussy.abc";
+>>>>>>> 16f3106bc3800cd057739a8160395bfc6a4ef5ce
 		Main.play(filename);
 	}
 }
