@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  */
 
 public class NoteParser {
-  String current_key;
+  public String current_key;
 
   public NoteParser() {
     this.current_key = "C";
@@ -22,8 +22,8 @@ public class NoteParser {
    *
    * @param Key
    */
-  public void setKey(String Key) {
-    this.current_key = Key;
+  public void setKey(String key) {
+    this.current_key = key;
   }
 
   /**

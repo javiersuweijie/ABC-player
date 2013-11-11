@@ -6,7 +6,7 @@ public class Token {
 	
 	public Token(TokenType t, String s) {
 		this.type = t;
-		this.value = s;
+		this.value = s.trim();
 	}
 
   public String getValue(){
