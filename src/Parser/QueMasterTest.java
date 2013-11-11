@@ -23,12 +23,13 @@ public class QueMasterTest {
 	Token duplet = new Token(TokenType.DUPLET,"");
 	Token triplet = new Token(TokenType.TRIPLET, "");
 	Token quadruplet = new Token(TokenType.QUADRUPLET,"");
-	Note rest_fixture_half = new Note((float)0.5, 'Z'); //length: 12
-	Note rest_fixture = new Note(1, 'Z'); //length: 24
-	Note note_fixture1 = new Note((float) 0.5, 'A'); //length: 12
-	Note note_fixture2 = new Note(2, 'B'); //length: 48
-	Note note_fixture3 = new Note(1,'C'); //length: 24
-	Note note_fixture4 = new Note(1,'D'); //length: 24
+	Token rest_fixture_half = new Token(TokenType.REST,"z/2");
+	Token rest_fixture = new Token(TokenType.REST,"z");
+	Token note_fixture1 = new Token(TokenType.NOTE,"A/2");
+	Token note_fixture2 = new Token(TokenType.NOTE,"B2");
+	Token note_fixture3 = new Token(TokenType.NOTE,"C");
+	Token note_fixture4  = new Token(TokenType.NOTE,"D");
+	
 	
 
 	@Test
@@ -104,8 +105,8 @@ public class QueMasterTest {
 		qm.read(note_fixture1); 
 		qm.read(repeat_end); 
 		assertEquals("It should have 8 note events",8,qm.getNoteEvents().size());
-		NoteEvent n5 = qm.noteEventCreator(note_fixture1);
-		assertEquals("It should have the right start tick(note2)",144,n5.start_tick);
+		assertEquals("It should have the right start tick(note2)",144,qm.getStartTick());
+		qm.read(note_fixture1);	
 		
 		qm.read(repeat_start); 
 		qm.read(note_fixture3); 
@@ -166,6 +167,7 @@ public class QueMasterTest {
 		qm.read(repeat_end);  //start:84 length:12
 		qm.read(repeat_two);
 		qm.read(note_fixture1); //start:96 length:12
+		assertEquals("It should have the right start tick",108,qm.getStartTick());
 		
 		qm.read(voice_2);
 		qm.read(repeat_one); 
@@ -176,9 +178,7 @@ public class QueMasterTest {
 		qm.read(note_fixture1); //start:96 length:12
 		qm.read(note_fixture1); //start:108 length:12
 		
-		qm.read(voice_1);
-		assertEquals("It should have the right start tick",108,qm.getStartTick());
-		qm.read(voice_2);
+		assertEquals("It should have the right channel",1,qm.getCurrentVoice());
 		assertEquals("It should have the right start tick (voice2)",120,qm.getStartTick());
 		assertEquals("It should have the right notes[0]",12,qm.getNoteEvents().get(0).tick_length);
 		assertEquals("It should have the right note[0] start tick", 0,qm.getNoteEvents().get(0).start_tick);
@@ -217,20 +217,24 @@ public class QueMasterTest {
 		
 		qm.read(triplet);
 		qm.read(chord);
-		qm.read(note_fixture3);
-		qm.read(note_fixture4);
+		qm.read(note_fixture1);
+		qm.read(note_fixture1);
 		qm.read(note_fixture1);
 		qm.read(chord);
+		qm.read(note_fixture1);
+		qm.read(note_fixture1);
+		assertEquals("It should have right start tick",24, qm.getStartTick());
 		qm.read(note_fixture3);
 		qm.read(note_fixture3);
+		assertEquals("It should have right start tick",72, qm.getStartTick());
 		
-		assertEquals("It should have right start tick",48, qm.getStartTick());
 	}
 	
 	@Test
 	public void restRepeatWithChords() {
 		QueMaster qm = new QueMaster();
 		qm.read(note_fixture3); //start:0 length:24
+		
 		qm.read(note_fixture3); //start:24 length:24
 		qm.read(repeat_one); //start:48
 		qm.read(duplet); 

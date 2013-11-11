@@ -142,4 +142,13 @@ public class NoteParserTest {
 	 note = new Token(TokenType.NOTE, "F/");
 	 assertEquals(0.5, np.findNoteLength(note),0.0);
   }
+  @Test
+  public void testGmajor() {
+	  NoteParser np = new NoteParser();
+	  Token note = new Token(TokenType.NOTE,"F");
+	  Token key = new Token(TokenType.KEY, "G ");
+	  np.setKey(key.getValue());
+	  assertEquals(1,np.parse(note).accidentals);
+	  assertEquals(66,np.parse(note).toPitch().toMidiNote());
+  }
 }
