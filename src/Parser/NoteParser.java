@@ -2,6 +2,7 @@ package Parser;
 
 import sound.Note;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,9 +12,11 @@ import java.util.regex.Pattern;
 
 public class NoteParser {
   String current_key;
+  Map<String, String> defaultAccidentals;
 
   public NoteParser() {
     this.current_key = "C";
+    resetDefaultAccidentals();
   }
 
   /**
@@ -24,6 +27,11 @@ public class NoteParser {
    */
   public void setKey(String Key) {
     this.current_key = Key;
+    resetDefaultAccidentals();
+  }
+
+  public void resetDefaultAccidentals() {
+    defaultAccidentals = Keys.getKey(this.current_key);
   }
 
   /**
@@ -100,11 +108,10 @@ public class NoteParser {
    * @return int accidental
    */
 
-  int findAccidentals(Token note, char baseNote) {
-	 
-    String shiftedNote = Keys.getKey(current_key).get(""+baseNote);
-    return findAccidentals(note.value+shiftedNote);
-  }
+//  int findAccidenhtals(Token note, char baseNote) {
+//    String shiftedNote = Keys.getKey(current_key).get(""+baseNote);
+//    return findAccidentals(note.value+shiftedNote);
+//  }
 
   /**
    * This method calculates how much a note is transposed
@@ -113,11 +120,14 @@ public class NoteParser {
    * @param Token note
    * @return int accidental
    */
-  int findAccidentals(String note){
+  int findAccidentals(Token noteToken, char baseNote){
+    String note = noteToken.value;
+    boolean specified = false;
     Pattern accidentalsPattern = Pattern.compile("[=_^]");
     Matcher matcher = accidentalsPattern.matcher(note);
     int accidentals = 0;
     while(matcher.find()){
+      specified = true;
       char accidental = matcher.group().charAt(0);
 
       if(accidental == '=') {
@@ -127,6 +137,9 @@ public class NoteParser {
       if(accidental == '_') accidentals -=1;
       else accidentals +=1;
     }
+
+    if(!specified) accidentals = getDefaultAccidental(baseNote); //unspecified, use known default!
+    else setDefaultAccidental(baseNote, accidentals);//specified! Reset default and return!
     return accidentals;
   }
   
@@ -152,5 +165,28 @@ public class NoteParser {
       }
     }
     return length;
+  }
+
+  /**
+   * Private wrapper around default accidentals.
+   *
+   * This is to help in calculating the actual accidentals
+   * @param baseNote
+   * @return
+   */
+  private int getDefaultAccidental(char baseNote) {
+    String note = "" + baseNote;
+    String defaultNote = defaultAccidentals.get(note);
+    if (defaultNote.equals(note)) return 0;
+
+    return defaultNote.charAt(0) == '_'? -1:1;
+  }
+
+  private void setDefaultAccidental(char baseNote, int value) {
+    String note = ""+baseNote;
+    String accidental = "";
+    if(value == 1) accidental = "^";
+    else if(value == -1) accidental = "_";
+    defaultAccidentals.put(note, accidental+note);
   }
 }
