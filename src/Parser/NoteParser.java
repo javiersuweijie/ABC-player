@@ -46,11 +46,14 @@ public class NoteParser {
    * @return Note(length, accidentals, baseNote, octave)
    */
   public Note parse(Token note){
-    int octave = findOctave(note);
+    int octave =0;
+    int accidentals = 0;
     char baseNote = findBaseNote(note);
-    int accidentals = findAccidentals(note, baseNote);
+    if(note.type == TokenType.NOTE){
+      octave = findOctave(note);
+      accidentals = findAccidentals(note, baseNote);
+    }
     float length = findNoteLength(note);
-    
     return new Note(length, accidentals, baseNote, octave);
   }
   
