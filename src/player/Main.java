@@ -70,7 +70,10 @@ public class Main {
         }
 	}
 	public static void main(String arg[]) {
+
+ 
         String filename="sample_abc/debussy.abc";
+
 		Main.play(filename);
 	}
 }
