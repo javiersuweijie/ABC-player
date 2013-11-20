@@ -6,29 +6,6 @@ import org.junit.Test;
 
 public class MainTest {
 
-	@Test
-	public void testDebussy() {
-		String filename="sample_abc/debussy.abc";
-		Main.play(filename);
-	}
-	
-	@Test
-	public void testfur_elise() {
-		String filename="sample_abc/fur_elise.abc";
-		Main.play(filename);
-	}
-	
-	@Test
-	public void testInvention() {
-		String filename="sample_abc/invention.abc";
-		Main.play(filename);
-	}
-	
-	@Test
-	public void testLittle_night_music() {
-		String filename="sample_abc/little_night_music.abc";
-		Main.play(filename);
-	}
 	
 	@Test
 	public void testPaddy() {
@@ -65,4 +42,25 @@ public class MainTest {
 		String filename="sample_abc/scale.abc";
 		Main.play(filename);
 	}
+	
+	@Test
+	public void testInvention() {
+		String filename="sample_abc/invention.abc";
+		Main.play(filename);
+	}
+	
+
+	@Test
+	public void testfur_elise() {
+		String filename="sample_abc/fur_elise.abc";
+		Main.play(filename);
+	}
+	
+
+	@Test
+	public void testLittle_night_music() {
+		String filename="sample_abc/little_night_music.abc";
+		Main.play(filename);
+	}
+	
 }
