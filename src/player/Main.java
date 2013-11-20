@@ -46,12 +46,14 @@ public class Main {
                 	}
                 } while (t!=null);
                 try {
-                	System.out.println(qm.getTempo());
-                	System.out.println(qm.getLength());
-                	System.out.println(qm.getMeter());
-                	System.out.println(qm.getVoiceChannels().toString());
-					SequencePlayer player = new SequencePlayer((int)(qm.getTempo())*3*11*2*5,24);
-					//SequencePlayer player = new SequencePlayer((int)(qm.getTempo()),24);
+                	System.out.println("Title: "+qm.getTitle());
+                	System.out.println("Tempo: "+qm.getTempo());
+                	System.out.println("Default note length: "+qm.getLength());
+                	System.out.println("Meter: "+qm.getMeter());
+                	System.out.println("Number of voices: "+qm.getVoiceChannels().toString());
+                	System.out.println("Key: "+qm.getKey());
+					//SequencePlayer player = new SequencePlayer((int)(qm.getTempo())*3*11*2*5,24); //Uncomment this and #dubussy-only in QueMaster.java to play debussy 
+					SequencePlayer player = new SequencePlayer((int)(qm.getTempo()),24);
 					for (NoteEvent ne:qm.getNoteEvents()) {
 						player.addNote(ne.pitch, ne.start_tick, ne.tick_length);
 					}
@@ -70,7 +72,7 @@ public class Main {
         }
 	}
 	public static void main(String arg[]) {
-        String filename="sample_abc/debussy.abc";
+        String filename="sample_abc/fur_elise.abc";
 		Main.play(filename);
 	}
 }

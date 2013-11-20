@@ -181,7 +181,6 @@ public class ReadFile {
             fileReader.close();
             reader.close();
             
-            System.out.println(result);
             return result.toString();
     }
 

@@ -1,6 +1,8 @@
 package Parser;
 import java.util.ArrayList;
 
+import javax.management.RuntimeErrorException;
+
 import sound.*;
 /** QueMaster handles all rhythm and note related 
  * tokens to create an array of NoteEvents
@@ -9,6 +11,7 @@ import sound.*;
  */
 public class QueMaster {
 	
+	private String title;
 	private int tempo;
 	private int initial_tempo;
 	private float meter;
@@ -21,6 +24,7 @@ public class QueMaster {
 	private int repeat_from;
 	private byte repeat_num;
 	private boolean is_repeating;
+	private String key;
 	private ArrayList<Integer> voice_channels;
 	private ArrayList<NoteEvent> noteEventList;
 	public ArrayList<ArrayList<Object>> noteEventStorage;
@@ -33,6 +37,7 @@ public class QueMaster {
 	 * 	
 	 */
 	public QueMaster() {
+		this.title = "none";
 		this.tempo = 0;
 		this.meter = 1;
 		this.length = (float)1/8;
@@ -47,6 +52,13 @@ public class QueMaster {
 		this.repeat_from = 0;
 		this.is_repeating = false;
 		this.np = new NoteParser();
+	}
+	/** Getter for title
+	 * 
+	 * @return String title
+	 */
+	public String getTitle() {
+		return this.title;
 	}
 
 	/** Getter for current tempo
@@ -126,6 +138,10 @@ public class QueMaster {
 	}
 	
 	
+	public String getKey() {
+		return this.key;
+	}
+	
 	
 	/** Method to align all the start times together
 	 * 
@@ -200,7 +216,7 @@ public class QueMaster {
 	 */
 	private void voiceHandler(Token t) {
 		int v = Integer.valueOf(t.value);
-		if (v==1) this.evenStartTick();
+		//if (v==1) this.evenStartTick();
 		while (v>voice_channels.size()) {
 			voice_channels.add(0);
 			this.noteEventStorage.add(new ArrayList<Object>());
@@ -237,6 +253,7 @@ public class QueMaster {
 	 * @param t
 	 */
 	private void barHandler(Token t) {
+		np.resetDefaultAccidentals();
 		if (t.value.equalsIgnoreCase(":|")) {
 			is_repeating = true;
 			this.repeat_num = 0;
@@ -349,6 +366,11 @@ public class QueMaster {
 			case REST:		this.noteAndRestHandler(t);
 							break;
 			case KEY:		np.setKey(t.getValue());
+							this.key = t.getValue();
+							break;
+			case TITLE: 
+				this.title = t.value;
+				break;
 			default: 		break;
 		}
 	}
@@ -372,19 +394,22 @@ public class QueMaster {
 		int start_tick = this.getStartTick();
 		double length_modifier = 1;
 		if (this.triplet!=0) {
+			if (triplet > 3) throw new RuntimeException("Triplet does not contain 3 notes");
 			length_modifier = 2.0/3;
 			--this.triplet;
 		}
 		else if (this.duplet!=0) {
+			if(duplet>2) throw new RuntimeException("Duplet does not contain 2 notes");
 			length_modifier = 3.0/2;
 			--this.duplet;
 		}
 		else if (this.quadruplet!=0) {
+			if (this.quadruplet>4) throw new RuntimeException("Quadruplet does not contain 4 notes");
 			length_modifier = 3.0/4;
 			--this.quadruplet;
 		}
-		int tick_length = (int) (8*3*n.length*length_modifier*(double)initial_tempo/tempo*3*11*2*5);
-		//int tick_length = (int)(8*3*n.length*length_modifier);
+		//int tick_length = (int) (8*3*n.length*length_modifier*(double)initial_tempo/tempo*3*11*2*5);
+		int tick_length = (int)(8*3*n.length*length_modifier);
 		if (!chord) {
 			voice_channels.set(current_channel, ( start_tick + tick_length));
 		}
