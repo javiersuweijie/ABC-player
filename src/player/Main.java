@@ -52,7 +52,6 @@ public class Main {
                 	System.out.println("Meter: "+qm.getMeter());
                 	System.out.println("Number of voices: "+qm.getVoiceChannels().toString());
                 	System.out.println("Key: "+qm.getKey());
-					//SequencePlayer player = new SequencePlayer((int)(qm.getTempo())*3*11*2*5,24); //Uncomment this and #dubussy-only in QueMaster.java to play debussy 
 					SequencePlayer player = new SequencePlayer((int)(qm.getTempo()),24);
 					for (NoteEvent ne:qm.getNoteEvents()) {
 						player.addNote(ne.pitch, ne.start_tick, ne.tick_length);

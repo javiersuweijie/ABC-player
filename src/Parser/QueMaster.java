@@ -52,6 +52,7 @@ public class QueMaster {
 		this.repeat_from = 0;
 		this.is_repeating = false;
 		this.np = new NoteParser();
+		this.initial_tempo = 60;
 	}
 	/** Getter for title
 	 * 
@@ -391,6 +392,7 @@ public class QueMaster {
 	}
 	
 	public NoteEvent noteEventCreator(Note n) {
+		if (this.initial_tempo == 0) throw new RuntimeException("Please specify a valid tempo"); 
 		int start_tick = this.getStartTick();
 		double length_modifier = 1;
 		if (this.triplet!=0) {
@@ -408,7 +410,6 @@ public class QueMaster {
 			length_modifier = 3.0/4;
 			--this.quadruplet;
 		}
-		//int tick_length = (int) (8*3*n.length*length_modifier*(double)initial_tempo/tempo*3*11*2*5);
 		int tick_length = (int)(8*3*n.length*length_modifier);
 		if (!chord) {
 			voice_channels.set(current_channel, ( start_tick + tick_length));
